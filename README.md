@@ -1,2 +1,4 @@
-# A7-DlcMerger
-This mod allows you to merge DLC archives into Enhanced Edition games.
+# DLC Merger
+*Allows you to merge DLC archives into Infinity Engine Enhanced Edition games.*
+
+**Coming soon...**
