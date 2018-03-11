@@ -1,0 +1,23 @@
+@0 = ~Merge DLC into game~
+@1 = ~"Siege of Dragonspear" DLC~
+@2 = ~User-defined DLC~
+@3 = ~All available DLCs~
+
+@50 = ~Baldur's Gate: Enhanced Edition required.~
+@51 = ~Siege of Dragonspear DLC required.~
+@52 = ~Enhanced Edition game required.~
+
+@100 = ~Merging keys...~
+@101 = ~Unpacking DLC archive. This may take a while...~
+
+@200 = ~DLC archive is corrupt or incomplete.~
+@201 = ~Unable to merge keys.~
+@202 = ~Could not unpack DLC archive.~
+
+@300 = ~Enter DLC filename (without path or extension):~
+@301 = ~Please enter DLC filename without path or extension.~
+@302 = ~Could not find DLC "%dlc_name%". Try again (y/n)?~
+@303 = ~Merge operation cancelled.~
+
+@400 = ~Merging DLC "%dlc_name%"...~
+@401 = ~No DLC archives found. Installation cancelled.~

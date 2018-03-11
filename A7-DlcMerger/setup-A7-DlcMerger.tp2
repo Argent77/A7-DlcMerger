@@ -1,0 +1,129 @@
+BACKUP ~A7-DlcMerger/backup~
+AUTHOR ~Argent77 at Beamdog Forums~
+VERSION ~0.1-beta~
+
+ALWAYS
+  INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~
+
+  ACTION_IF (~%WEIDU_OS%~ STR_EQ ~win32~) BEGIN
+    OUTER_TEXT_SPRINT unzip ~%MOD_FOLDER%/tools/win32/unzip.exe~
+  END ELSE BEGIN
+    OUTER_TEXT_SPRINT unzip ~unzip~
+  END
+  OUTER_TEXT_SPRINT path_temp ~%MOD_FOLDER%/temp~
+END
+
+README ~%MOD_FOLDER%/readme/readme-%LANGUAGE%.txt~ ~%MOD_FOLDER%/readme/readme.txt~
+
+LANGUAGE ~English~
+         ~english~
+         ~%MOD_FOLDER%/languages/english/setup.tra~
+
+
+BEGIN @1  // "Siege of Dragonspear" DLC
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
+SUBCOMPONENT @0 // Merge DLC into game
+DESIGNATED 1
+
+ACTION_IF NOT (GAME_IS ~bgee~ && NOT GAME_INCLUDES ~sod~) BEGIN
+  FAIL @50 // Baldur's Gate: Enhanced Edition required.
+END
+
+LAF FIND_DLC_FILE STR_VAR dlc_res = ~sod-dlc~ RET found END
+ACTION_IF (NOT found) BEGIN
+  FAIL @51  // Siege of Dragonspear DLC required.
+END
+
+COPY ~chitin.key~ ~chitin.original~
+LAF MERGE_DLC
+STR_VAR
+  dlc_res     = ~sod-dlc~
+  path_temp
+  path_unzip  = EVAL ~%unzip%~
+END
+
+
+BEGIN @2  // User-defined DLC
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
+SUBCOMPONENT @0 // Merge DLC into game
+DESIGNATED 2
+
+OUTER_SET finished = 0
+OUTER_WHILE (NOT finished) BEGIN
+  PRINT @300  // Enter DLC name (without path or extension):
+  ACTION_READLN dlc_name
+
+  ACTION_IF (INDEX(~[\\/]~ ~%dlc_name%~) >= 0) BEGIN
+    PRINT @301 // Please enter DLC filename without path or extension.
+  END ELSE BEGIN
+    LAF FIND_DLC_FILE
+      STR_VAR dlc_res = EVAL ~%dlc_name%~
+      RET found
+    END
+    ACTION_IF (NOT found) BEGIN
+      PRINT @302  // Could not find DLC "%dlc_name%". Try again (y/n)?
+      ACTION_READLN yesno
+      ACTION_IF (~%yesno%~ STRING_MATCHES_REGEXP ~[yY].*~ != 0) BEGIN
+        FAIL @303 // Merge operation cancelled.
+      END
+    END ELSE BEGIN
+      OUTER_SET finished = 1
+    END
+  END
+END
+
+COPY ~chitin.key~ ~chitin.original~
+LAF MERGE_DLC
+STR_VAR
+  dlc_res     = EVAL ~%dlc_name%~
+  path_temp
+  path_unzip  = EVAL ~%unzip%~
+END
+
+
+BEGIN @3  // All available DLCs
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
+SUBCOMPONENT @0 // Merge DLC into game
+DESIGNATED 3
+
+OUTER_SET chitin_backup = 0
+ACTION_FOR_EACH path IN ~%USER_DIRECTORY%~ ~.~ ~dlc~ ~workshop~ BEGIN
+
+  ACTION_IF (DIRECTORY_EXISTS ~%path%~) BEGIN
+    // workshop acceptys files with .mod extension only
+    ACTION_IF (~%path%~ STR_EQ ~workshop~) BEGIN
+      OUTER_TEXT_SPRINT ext ~mod~
+    END ELSE BEGIN
+      OUTER_TEXT_SPRINT ext ~zip~
+    END
+
+    // scanning supported DLC folders
+    GET_FILE_ARRAY files ~%path%~ ~.+\.%ext%~
+    ACTION_PHP_EACH files AS _ => file_path BEGIN
+      ACTION_IF (NOT chitin_backup) BEGIN
+        OUTER_SET chitin_backup = 1
+        COPY ~chitin.key~ ~chitin.original~
+      END
+
+      LAF GET_PATH_CHILD STR_VAR path = EVAL ~%file_path%~ RET dlc_name = child END
+      OUTER_PATCH_SAVE dlc_name ~%dlc_name%~ BEGIN
+        SET pos = RINDEX_BUFFER(~\.~)
+        PATCH_IF (pos >= 0) BEGIN
+          DELETE_BYTES pos (BUFFER_LENGTH - pos)
+        END
+      END
+      PRINT @400  // Merging DLC "%dlc_name%"...
+      LAF MERGE_DLC
+      STR_VAR
+        dlc_res     = EVAL ~%dlc_name%~
+        path_temp
+        path_unzip  = EVAL ~%unzip%~
+      END
+    END
+    ACTION_CLEAR_ARRAY ~files~
+  END
+END
+
+ACTION_IF (NOT chitin_backup) BEGIN
+  FAIL @401 // No DLC archives found. Installation cancelled.
+END

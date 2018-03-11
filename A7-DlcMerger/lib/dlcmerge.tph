@@ -1,0 +1,60 @@
+INCLUDE ~%MOD_FOLDER%/lib/functions.tph~
+
+DEFINE_ACTION_FUNCTION MERGE_DLC
+STR_VAR
+  dlc_res     = ~sod-dlc~
+  path_temp   = ~~
+  path_unzip  = ~unzip~
+BEGIN
+  ACTION_IF (~%path_temp%~ STR_EQ ~~) BEGIN
+    OUTER_TEXT_SPRINT path_temp ~%MOD_FOLDER%/temp~
+  END
+
+  LAF GET_DLC_INFO
+    STR_VAR dlc_res
+    RET dlc_filespec dlc_directory dlc_ext
+  END
+
+  PRINT @101  // Unpacking DLC archive. This may take a while...
+  AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~
+  ACTION_IF (ret_val != 0) BEGIN
+    DELETE + ~%path_temp%~
+    FAIL @202 // Could not unpack DLC archive.
+  END
+  LAF COPY_RECURSIVE
+  INT_VAR
+    delete = 1  // delete file after copy operation
+  STR_VAR
+    source_dir  = EVAL ~%path_temp%~
+    dest_dir    = ~~
+    biff_folder = EVAL ~%dlc_res%~
+  END
+
+  PRINT @100  // Merging keys...
+  MKDIR ~%path_temp%~
+  AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" mod.key -d "%path_temp%"~
+  ACTION_IF (ret_val != 0 || NOT FILE_EXISTS ~%path_temp%/mod.key~) BEGIN
+    DELETE + ~%path_temp%~
+    FAIL @200 // DLC archive is corrupt or incomplete.
+  END
+  LAF MERGE_KEYS
+  STR_VAR
+    chitin_key  = ~chitin.key~
+    mod_key     = EVAL ~%path_temp%/mod.key~
+    biff_folder = EVAL ~%dlc_res%~
+  RET
+    success
+  END
+  ACTION_IF (NOT success) BEGIN
+    DELETE + ~%path_temp%~
+    FAIL @201 // Unable to merge keys.
+  END
+
+  DELETE + ~%path_temp%~
+  // TODO: MOVE currently fails if paths contain spaces
+  ACTION_IF (~%dlc_filespec%~ STRING_CONTAINS_REGEXP ~[ %TAB%]~ = 0) BEGIN
+    PRINT ~IMPORTANT: Please rename "%dlc_filespec%" to "%dlc_res%.disabled", so that it doesn't interfere with the merged DLC resources.~
+  END ELSE BEGIN
+    MOVE ~%dlc_filespec%~ ~%dlc_directory%/%dlc_res%.disabled~
+  END
+END
