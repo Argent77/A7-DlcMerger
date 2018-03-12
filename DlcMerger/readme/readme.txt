@@ -26,7 +26,7 @@ Installation
 ~~~~~~~~~~~~
 
 This is a WeiDU mod, that means it is very easy to install. Simply unpack the downloaded archive into your game 
-directory and run "setup-A7-DlcMerger.exe". Follow the instructions to merge the desired DLC archives.
+directory and run "setup-DlcMerger.exe". Follow the instructions to merge the desired DLC archives.
 
 
 Components
