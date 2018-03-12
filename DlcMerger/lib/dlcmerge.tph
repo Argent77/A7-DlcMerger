@@ -25,15 +25,35 @@ BEGIN
     RET dlc_filespec dlc_directory dlc_ext
   END
 
-  PRINT @101  // Unpacking DLC archive. This may take a while...
-  AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~
-  ACTION_IF (ret_val != 0) BEGIN
-    DELETE + ~%path_temp%~
+  // Doing quick DLC integrity check
+  LAF IS_DLC_VALID
+  STR_VAR
+    path_dlc = EVAL ~%dlc_filespec%~
+    path_unzip
+  RET
+    success
+  END
+  ACTION_IF (NOT success) BEGIN
     ACTION_IF (fail_on_error) BEGIN
-      FAIL @202 // Could not unpack DLC archive.
+      FAIL @200 // DLC archive is corrupt or incomplete.
     END ELSE BEGIN
       OUTER_SET failed = 1
-      OUTER_SPRINT message @202 // Could not unpack DLC archive.
+      OUTER_SPRINT message @200 // DLC archive is corrupt or incomplete.
+    END
+  END
+
+  ACTION_IF (NOT failed) BEGIN
+    PRINT @101  // Unpacking DLC archive. This may take a while...
+    MKDIR ~%path_temp%~
+    AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~
+    ACTION_IF (ret_val != 0) BEGIN
+      DELETE + ~%path_temp%~
+      ACTION_IF (fail_on_error) BEGIN
+        FAIL @202 // Could not unpack DLC archive.
+      END ELSE BEGIN
+        OUTER_SET failed = 1
+        OUTER_SPRINT message @202 // Could not unpack DLC archive.
+      END
     END
   END
 
@@ -48,7 +68,6 @@ BEGIN
     END
 
     PRINT @100  // Merging keys...
-    MKDIR ~%path_temp%~
     AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" mod.key -d "%path_temp%"~
     ACTION_IF (ret_val != 0 || NOT FILE_EXISTS ~%path_temp%/mod.key~) BEGIN
       DELETE + ~%path_temp%~
@@ -85,7 +104,7 @@ BEGIN
     DELETE + ~%path_temp%~
     // TODO: MOVE currently fails if paths contain spaces
     ACTION_IF (~%dlc_filespec%~ STRING_CONTAINS_REGEXP ~[ %TAB%]~ = 0) BEGIN
-      PRINT ~IMPORTANT: Please rename "%dlc_filespec%" to "%dlc_res%.disabled", so that it doesn't interfere with the merged DLC resources.~
+      PRINT ~IMPORTANT: Please rename "%dlc_filespec%" to "%dlc_res%.disabled".~
     END ELSE BEGIN
       MOVE ~%dlc_filespec%~ ~%dlc_directory%/%dlc_res%.disabled~
     END

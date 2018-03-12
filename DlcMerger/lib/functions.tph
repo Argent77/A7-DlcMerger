@@ -22,6 +22,27 @@ BEGIN
   END
 END
 
+// Returns whether specified DLC is a valid
+DEFINE_ACTION_FUNCTION IS_DLC_VALID
+STR_VAR
+  path_dlc    = ~~    // full path to DLC archive
+  path_unzip  = ~unzip~
+RET
+  success
+BEGIN
+  OUTER_SET success = 0
+
+  ACTION_IF (NOT ~%path_dlc%~ STR_EQ ~~) BEGIN
+    ACTION_IF (~%WEIDU_OS%~ STR_EQ ~win32~) BEGIN
+      OUTER_TEXT_SPRINT null ~nul~
+    END ELSE BEGIN
+      OUTER_TEXT_SPRINT null ~/dev/null~
+    END
+    AT_NOW ret_val ~%unzip% -l "%path_dlc%" mod.key >%null%~
+    OUTER_SET success = (ret_val = 0) ? 1 : 0
+  END
+END
+
 // Returns path information about requested DLC
 DEFINE_ACTION_FUNCTION GET_DLC_INFO
 STR_VAR
@@ -155,147 +176,161 @@ BEGIN
              FILE_EXISTS ~%chitin_key%~ && FILE_EXISTS ~%mod_key%~) BEGIN
     OUTER_SET success = 1
 
-    // preparing chitin.key data
-    COPY - ~%chitin_key%~ ~%chitin_key%~
+    // Check if key merging is really needed
+    OUTER_SET merge_keys = 1
+    COPY - ~%mod_key%~ ~%mod_key%~
       READ_ASCII 0 sig (8)
       PATCH_IF (~%sig%~ STR_EQ ~KEY V1  ~) BEGIN
         READ_LONG 0x08 numBiff
         READ_LONG 0x0c numResref
-        READ_LONG 0x10 ofsBiff
-        READ_LONG 0x14 ofsResref
-        SET chitin_biff = 0
-        FOR (idx = 0; idx < numBiff; ++idx) BEGIN
-          SET ofs = ofsBiff + (idx * 12)
-          READ_ASCII ofs data (12)
-          TEXT_SPRINT EVAL ~chitin_biff_%idx%~ ~%data%~
-          READ_LONG (ofs + 4) ofsName
-          READ_SHORT (ofs + 8) lenName
-          READ_ASCII ofsName name (lenName - 1)
-          INNER_PATCH_SAVE name ~%name%~ BEGIN REPLACE_TEXTUALLY ~\\~ ~/~ END
-          TEXT_SPRINT EVAL ~chitin_biff_%idx%_name~ ~%name%~
-          SET chitin_biff += 1
+        PATCH_IF (numBiff = 0 && numResref = 0) BEGIN
+          SET merge_keys = 0
         END
-
-        SET chitin_resref = 0
-        FOR (idx = 0; idx < numResref; ++idx) BEGIN
-          SET ofs = ofsResref + (idx * 14)
-          READ_ASCII ofs data (14)
-          TEXT_SPRINT EVAL ~chitin_resref_%idx%~ ~%data%~
-          READ_ASCII ofs name (8) NULL
-          TEXT_SPRINT EVAL ~chitin_resref_%idx%_name~ ~%name%~
-          READ_SHORT (ofs + 8) type
-          SET EVAL ~chitin_resref_%idx%_type~ = type
-          READ_LONG (ofs + 10) locator
-          SET EVAL ~chitin_resref_%idx%_locator~ = locator
-          // mapping name+type to chitin_resref index to increase search performance
-          TEXT_SPRINT name2 ~%name%~
-          TO_UPPER ~name2~
-          SET EVAL ~map_resref_%name2%_%type%~ = idx
-
-          SET chitin_resref += 1
-        END
-      END ELSE BEGIN
-        SET success = 0
       END
-    BUT_ONLY
 
-    ACTION_IF (success) BEGIN
-      // preparing mod.key data
-      COPY - ~%mod_key%~ ~%mod_key%~
+    ACTION_IF (merge_keys) BEGIN
+      // preparing chitin.key data
+      COPY - ~%chitin_key%~ ~%chitin_key%~
         READ_ASCII 0 sig (8)
         PATCH_IF (~%sig%~ STR_EQ ~KEY V1  ~) BEGIN
           READ_LONG 0x08 numBiff
           READ_LONG 0x0c numResref
           READ_LONG 0x10 ofsBiff
           READ_LONG 0x14 ofsResref
-
-          SET map_biff = 0    // maps mod.key biff indices to chitin.key biff indices
+          SET chitin_biff = 0
           FOR (idx = 0; idx < numBiff; ++idx) BEGIN
             SET ofs = ofsBiff + (idx * 12)
             READ_ASCII ofs data (12)
+            TEXT_SPRINT EVAL ~chitin_biff_%idx%~ ~%data%~
             READ_LONG (ofs + 4) ofsName
             READ_SHORT (ofs + 8) lenName
             READ_ASCII ofsName name (lenName - 1)
             INNER_PATCH_SAVE name ~%name%~ BEGIN REPLACE_TEXTUALLY ~\\~ ~/~ END
-            LPF REPLACE_FOLDER_NAME STR_VAR path = EVAL ~%name%~ folder_name = EVAL ~%biff_folder%~ RET name = new_path END
-            // adding mod biffs to chitin biff list
-            SET EVAL ~map_biff_%idx%~ = chitin_biff
-            TEXT_SPRINT EVAL ~chitin_biff_%chitin_biff%~ ~%data%~
-            TEXT_SPRINT EVAL ~chitin_biff_%chitin_biff%_name~ ~%name%~
+            TEXT_SPRINT EVAL ~chitin_biff_%idx%_name~ ~%name%~
             SET chitin_biff += 1
           END
 
-          // updating chitin resrefs with mod resrefs
+          SET chitin_resref = 0
           FOR (idx = 0; idx < numResref; ++idx) BEGIN
             SET ofs = ofsResref + (idx * 14)
             READ_ASCII ofs data (14)
+            TEXT_SPRINT EVAL ~chitin_resref_%idx%~ ~%data%~
             READ_ASCII ofs name (8) NULL
+            TEXT_SPRINT EVAL ~chitin_resref_%idx%_name~ ~%name%~
             READ_SHORT (ofs + 8) type
+            SET EVAL ~chitin_resref_%idx%_type~ = type
             READ_LONG (ofs + 10) locator
-            SET biff_idx = (locator >> 20) & 0xfff
-            SET biff_idx = EVAL ~map_biff_%biff_idx%~ & 0xfff
-            SET locator = (locator & 0x000fffff) | (biff_idx << 20)
-            INNER_PATCH_SAVE data ~%data%~ BEGIN WRITE_LONG 10 locator END
-
+            SET EVAL ~chitin_resref_%idx%_locator~ = locator
+            // mapping name+type to chitin_resref index to increase search performance
             TEXT_SPRINT name2 ~%name%~
             TO_UPPER ~name2~
-            PATCH_IF (VARIABLE_IS_SET EVAL ~map_resref_%name2%_%type%~) BEGIN
-              SET cidx = EVAL ~map_resref_%name2%_%type%~
-              TEXT_SPRINT EVAL ~chitin_resref_%cidx%~ ~%data%~
-              TEXT_SPRINT EVAL ~chitin_resref_%cidx%_name~ ~%name%~
-              SET EVAL ~chitin_resref_%cidx%_type~ = type
-              SET EVAL ~chitin_resref_%cidx%_locator~ = locator
-            END ELSE BEGIN
-              TEXT_SPRINT EVAL ~chitin_resref_%chitin_resref%~ ~%data%~
-              TEXT_SPRINT EVAL ~chitin_resref_%chitin_resref%_name~ ~%name%~
-              SET EVAL ~chitin_resref_%chitin_resref%_type~ = type
-              SET EVAL ~chitin_resref_%chitin_resref%_locator~ = locator
-              SET chitin_resref += 1
-            END
+            SET EVAL ~map_resref_%name2%_%type%~ = idx
+
+            SET chitin_resref += 1
           END
         END ELSE BEGIN
           SET success = 0
         END
       BUT_ONLY
-    END
 
-    ACTION_IF (success) BEGIN
-      COPY ~chitin.key~ ~chitin.key~
-        DELETE_BYTES 0x18 (BUFFER_LENGTH - 0x18)  // remove all biff and resref data
+      ACTION_IF (success) BEGIN
+        // preparing mod.key data
+        COPY - ~%mod_key%~ ~%mod_key%~
+          READ_ASCII 0 sig (8)
+          PATCH_IF (~%sig%~ STR_EQ ~KEY V1  ~) BEGIN
+            READ_LONG 0x08 numBiff
+            READ_LONG 0x0c numResref
+            READ_LONG 0x10 ofsBiff
+            READ_LONG 0x14 ofsResref
 
-        // writing biff data
-        SET numBiff = chitin_biff
-        SET ofsBiff = 0x18
-        SET ofsBiffNames = ofsBiff + (numBiff * 12)
-        INSERT_BYTES ofsBiff (ofsBiffNames - ofsBiff)
-        FOR (idx = 0; idx < numBiff; ++idx) BEGIN
-          SET ofs = ofsBiff + (idx * 12)
-          TEXT_SPRINT data EVAL ~%chitin_biff_%idx%%~
-          TEXT_SPRINT name EVAL ~%chitin_biff_%idx%_name%~
-          WRITE_ASCIIE ofs ~%data%~ (12)
-          SET len = STRING_LENGTH ~%name%~ + 1
-          INSERT_BYTES ofsBiffNames len
-          WRITE_ASCIIE ofsBiffNames ~%name%~ (len)
-          WRITE_LONG (ofs + 4) ofsBiffNames
-          WRITE_SHORT (ofs + 8) len
-          SET ofsBiffNames += len
-        END
+            SET map_biff = 0    // maps mod.key biff indices to chitin.key biff indices
+            FOR (idx = 0; idx < numBiff; ++idx) BEGIN
+              SET ofs = ofsBiff + (idx * 12)
+              READ_ASCII ofs data (12)
+              READ_LONG (ofs + 4) ofsName
+              READ_SHORT (ofs + 8) lenName
+              READ_ASCII ofsName name (lenName - 1)
+              INNER_PATCH_SAVE name ~%name%~ BEGIN REPLACE_TEXTUALLY ~\\~ ~/~ END
+              LPF REPLACE_FOLDER_NAME STR_VAR path = EVAL ~%name%~ folder_name = EVAL ~%biff_folder%~ RET name = new_path END
+              // adding mod biffs to chitin biff list
+              SET EVAL ~map_biff_%idx%~ = chitin_biff
+              TEXT_SPRINT EVAL ~chitin_biff_%chitin_biff%~ ~%data%~
+              TEXT_SPRINT EVAL ~chitin_biff_%chitin_biff%_name~ ~%name%~
+              SET chitin_biff += 1
+            END
 
-        // writing resref data
-        SET numResref = chitin_resref
-        SET ofsResref = ofsBiffNames
-        INSERT_BYTES ofsResref (numResref * 14)
-        FOR (idx = 0; idx < numResref; ++idx) BEGIN
-          SET ofs = ofsResref + (idx * 14)
-          TEXT_SPRINT data EVAL ~%chitin_resref_%idx%%~
-          WRITE_ASCIIE ofs ~%data%~ (14)
-        END
+            // updating chitin resrefs with mod resrefs
+            FOR (idx = 0; idx < numResref; ++idx) BEGIN
+              SET ofs = ofsResref + (idx * 14)
+              READ_ASCII ofs data (14)
+              READ_ASCII ofs name (8) NULL
+              READ_SHORT (ofs + 8) type
+              READ_LONG (ofs + 10) locator
+              SET biff_idx = (locator >> 20) & 0xfff
+              SET biff_idx = EVAL ~map_biff_%biff_idx%~ & 0xfff
+              SET locator = (locator & 0x000fffff) | (biff_idx << 20)
+              INNER_PATCH_SAVE data ~%data%~ BEGIN WRITE_LONG 10 locator END
 
-        // updating header
-        WRITE_LONG 0x08 numBiff
-        WRITE_LONG 0x0c numResref
-        WRITE_LONG 0x10 ofsBiff
-        WRITE_LONG 0x14 ofsResref
+              TEXT_SPRINT name2 ~%name%~
+              TO_UPPER ~name2~
+              PATCH_IF (VARIABLE_IS_SET EVAL ~map_resref_%name2%_%type%~) BEGIN
+                SET cidx = EVAL ~map_resref_%name2%_%type%~
+                TEXT_SPRINT EVAL ~chitin_resref_%cidx%~ ~%data%~
+                TEXT_SPRINT EVAL ~chitin_resref_%cidx%_name~ ~%name%~
+                SET EVAL ~chitin_resref_%cidx%_type~ = type
+                SET EVAL ~chitin_resref_%cidx%_locator~ = locator
+              END ELSE BEGIN
+                TEXT_SPRINT EVAL ~chitin_resref_%chitin_resref%~ ~%data%~
+                TEXT_SPRINT EVAL ~chitin_resref_%chitin_resref%_name~ ~%name%~
+                SET EVAL ~chitin_resref_%chitin_resref%_type~ = type
+                SET EVAL ~chitin_resref_%chitin_resref%_locator~ = locator
+                SET chitin_resref += 1
+              END
+            END
+          END ELSE BEGIN
+            SET success = 0
+          END
+        BUT_ONLY
+      END
+
+      ACTION_IF (success) BEGIN
+        COPY ~chitin.key~ ~chitin.key~
+          DELETE_BYTES 0x18 (BUFFER_LENGTH - 0x18)  // remove all biff and resref data
+
+          // writing biff data
+          SET numBiff = chitin_biff
+          SET ofsBiff = 0x18
+          SET ofsBiffNames = ofsBiff + (numBiff * 12)
+          INSERT_BYTES ofsBiff (ofsBiffNames - ofsBiff)
+          FOR (idx = 0; idx < numBiff; ++idx) BEGIN
+            SET ofs = ofsBiff + (idx * 12)
+            TEXT_SPRINT data EVAL ~%chitin_biff_%idx%%~
+            TEXT_SPRINT name EVAL ~%chitin_biff_%idx%_name%~
+            WRITE_ASCIIE ofs ~%data%~ (12)
+            SET len = STRING_LENGTH ~%name%~ + 1
+            INSERT_BYTES ofsBiffNames len
+            WRITE_ASCIIE ofsBiffNames ~%name%~ (len)
+            WRITE_LONG (ofs + 4) ofsBiffNames
+            WRITE_SHORT (ofs + 8) len
+            SET ofsBiffNames += len
+          END
+
+          // writing resref data
+          SET numResref = chitin_resref
+          SET ofsResref = ofsBiffNames
+          INSERT_BYTES ofsResref (numResref * 14)
+          FOR (idx = 0; idx < numResref; ++idx) BEGIN
+            SET ofs = ofsResref + (idx * 14)
+            TEXT_SPRINT data EVAL ~%chitin_resref_%idx%%~
+            WRITE_ASCIIE ofs ~%data%~ (14)
+          END
+
+          // updating header
+          WRITE_LONG 0x08 numBiff
+          WRITE_LONG 0x0c numResref
+          WRITE_LONG 0x10 ofsBiff
+          WRITE_LONG 0x14 ofsResref
+      END
     END
   END
 END
