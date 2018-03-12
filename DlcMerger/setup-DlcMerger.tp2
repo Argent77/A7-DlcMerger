@@ -114,10 +114,18 @@ ACTION_FOR_EACH path IN ~%USER_DIRECTORY%~ ~.~ ~dlc~ ~workshop~ BEGIN
       END
       PRINT @400  // Merging DLC "%dlc_name%"...
       LAF MERGE_DLC
+      INT_VAR
+        fail_on_error = 0
       STR_VAR
         dlc_res     = EVAL ~%dlc_name%~
         path_temp
         path_unzip  = EVAL ~%unzip%~
+      RET
+        success
+        message
+      END
+      ACTION_IF (NOT success) BEGIN
+        WARN @402 // Failed to merge DLC archive "%dlc_name%" (%message%). Skipping...
       END
     END
     ACTION_CLEAR_ARRAY ~files~
