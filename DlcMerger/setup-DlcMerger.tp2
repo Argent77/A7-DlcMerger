@@ -21,12 +21,12 @@ LANGUAGE ~English~
 
 
 BEGIN @1  // "Siege of Dragonspear" DLC
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
+REQUIRE_PREDICATE (GAME_IS ~bgee~) @50 // Baldur's Gate: Enhanced Edition required.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 1
 
-ACTION_IF NOT (GAME_IS ~bgee~ && NOT GAME_INCLUDES ~sod~) BEGIN
-  FAIL @50 // Baldur's Gate: Enhanced Edition required.
+ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
+  ABORT @54 // Siege of Dragonspear DLC already merged.
 END
 
 LAF FIND_DLC_FILE STR_VAR dlc_res = ~sod-dlc~ RET found END
