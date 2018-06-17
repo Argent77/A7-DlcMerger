@@ -83,6 +83,7 @@ END
 
 BEGIN @3  // All available DLCs
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
+REQUIRE_PREDICATE (NOT ~%WEIDU_ARCH%~ STR_EQ ~x86~) @53 // Does not currently work with 32-bit WeiDU installer.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 3
 
