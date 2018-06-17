@@ -23,7 +23,7 @@ Merges a single DLC archive with the game. The mod prompts for the name of the D
 - "dlc" folder in install directory
 - "workshop" folder in install directory (requires DLC files with .mod extension)
 
-**3. Merge all available DLC archives (Enhanced Edition game required)**
+**3. Merge all available DLC archives (Enhanced Edition game required, 64-bit WeiDU installer required)**
 
 This option scans all supported DLC search paths of the game for available DLC archives. Each DLC will be merged in the same order as it would be loaded by the game, so that multiple DLC archives may safely override files from other DLCs without causing issues.
 
