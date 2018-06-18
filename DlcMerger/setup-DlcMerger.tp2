@@ -1,6 +1,6 @@
 BACKUP ~DlcMerger/backup~
 AUTHOR ~Argent77 at Beamdog Forums~
-VERSION ~0.2-beta~
+VERSION ~0.3-beta~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~
