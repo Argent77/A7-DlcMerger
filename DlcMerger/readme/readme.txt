@@ -1,7 +1,7 @@
 DLC Merger
 ~~~~~~~~~~
 
-Version:    0.3-beta
+Version:    1.0
 Author:     Argent77
 
 Download:   https://github.com/Argent77/A7-DlcMerger/releases
