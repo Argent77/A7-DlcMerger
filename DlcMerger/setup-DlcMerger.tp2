@@ -31,7 +31,7 @@ END
 
 LAF FIND_DLC_FILE STR_VAR dlc_res = ~sod-dlc~ RET found END
 ACTION_IF (NOT found) BEGIN
-  FAIL @51  // Siege of Dragonspear DLC required.
+  ABORT @51  // Siege of Dragonspear DLC required.
 END
 
 COPY ~chitin.key~ ~chitin.original~
@@ -64,7 +64,7 @@ OUTER_WHILE (NOT finished) BEGIN
       PRINT @302  // Could not find DLC "%dlc_name%". Try again (y/n)?
       ACTION_READLN yesno
       ACTION_IF (~%yesno%~ STRING_MATCHES_REGEXP ~[yY].*~ != 0) BEGIN
-        FAIL @303 // Merge operation cancelled.
+        ABORT @303 // Merge operation cancelled.
       END
     END ELSE BEGIN
       OUTER_SET finished = 1
@@ -134,5 +134,5 @@ ACTION_FOR_EACH path IN ~%USER_DIRECTORY%~ ~.~ ~dlc~ ~workshop~ BEGIN
 END
 
 ACTION_IF (NOT chitin_backup) BEGIN
-  FAIL @401 // No DLC archives found. Installation cancelled.
+  ABORT @401 // No DLC archives found. Installation cancelled.
 END
