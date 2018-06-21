@@ -11,11 +11,13 @@ The downside of this distribution method is the limited ability to mod the game 
 ## Components
 This mod provides three options to merge DLC archives with the game:
 
-**1. Merge "Siege of Dragonspear" with BG:EE (BG:EE and the SoD DLC required)**
+#### 1. Merge "Siege of Dragonspear" with BG:EE (BG:EE and the SoD DLC required)
 
 Merges the "Siege of Dragonspear" from any of the supported DLC locations with Baldur's Gate: Enhanced Edition.
 
-**2. Merge a user-defined DLC archive (Enhanced Edition game required)**
+**Note:** You need to apply the [Big World Fixpack](https://github.com/BiGWorldProject/BiG-World-Fixpack) if you want to use this mod in conjunction with EET (Enhanced Edition Trilogy).
+
+#### 2. Merge a user-defined DLC archive (Enhanced Edition game required)
 
 Merges a single DLC archive with the game. The mod prompts for the name of the DLC archive, which can be located in any of the supported DLC paths. Supported DLC paths are (in order of application):
 - Documents directory of the game
@@ -23,6 +25,6 @@ Merges a single DLC archive with the game. The mod prompts for the name of the D
 - "dlc" folder in install directory
 - "workshop" folder in install directory (requires DLC files with .mod extension)
 
-**3. Merge all available DLC archives (Enhanced Edition game required, 64-bit WeiDU installer required)**
+#### 3. Merge all available DLC archives (Enhanced Edition game required, 64-bit WeiDU installer required)
 
 This option scans all supported DLC search paths of the game for available DLC archives. Each DLC will be merged in the same order as it would be loaded by the game, so that multiple DLC archives may safely override files from other DLCs without causing issues. Because of technical reasons, this operation is currently only successful if the mod is invoked by a 64-bit WeiDU installer.
