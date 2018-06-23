@@ -5,7 +5,7 @@ Version:    1.1
 Author:     Argent77
 
 Download:   https://github.com/Argent77/A7-DlcMerger/releases
-Discussion:
+Discussion: https://forums.beamdog.com/discussion/71305
 
 
 Overview
