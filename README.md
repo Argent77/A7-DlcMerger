@@ -15,8 +15,6 @@ This mod provides three options to merge DLC archives with the game:
 
 Merges the "Siege of Dragonspear" from any of the supported DLC locations with Baldur's Gate: Enhanced Edition.
 
-**Note:** You need to apply the [Big World Fixpack](https://github.com/BiGWorldProject/BiG-World-Fixpack) if you want to use this mod in conjunction with EET (Enhanced Edition Trilogy).
-
 #### 2. Merge a user-defined DLC archive (Enhanced Edition game required)
 
 Merges a single DLC archive with the game. The mod prompts for the name of the DLC archive, which can be located in any of the supported DLC paths. Supported DLC paths are (in order of application):
