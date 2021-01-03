@@ -17,7 +17,7 @@ README ~%MOD_FOLDER%/readme/readme-%LANGUAGE%.txt~ ~%MOD_FOLDER%/readme/readme.t
 
 LANGUAGE ~English~
          ~english~
-         ~%MOD_FOLDER%/languages/english/setup.tra~
+         ~DlcMerger/languages/english/setup.tra~
 
 
 BEGIN @1  // "Siege of Dragonspear" DLC
