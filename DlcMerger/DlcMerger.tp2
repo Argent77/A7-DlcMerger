@@ -1,6 +1,6 @@
 BACKUP ~DlcMerger/backup~
 SUPPORT ~https://forums.beamdog.com/discussion/71305~
-VERSION ~1.2~
+VERSION ~1.3~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~

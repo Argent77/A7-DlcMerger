@@ -1,7 +1,7 @@
 DLC Merger
 ~~~~~~~~~~
 
-Version:    1.2
+Version:    1.3
 Author:     Argent77
 
 Download:   https://github.com/Argent77/A7-DlcMerger/releases
@@ -72,6 +72,14 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 
 History
 ~~~~~~~
+
+1.3
+- Added German translation
+- Added Project Infinity metadata
+- Added WeiDU SUPPORT information
+- Fixed potential display issues with component names in WeiDU.log and Project Infinity
+- Improved description of components (thanks ALIEN)
+
 1.2
 - Removed information regarding EET and Fixpack from readme because it's not needed anymore
 
