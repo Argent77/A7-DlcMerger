@@ -63,6 +63,14 @@ To work around this issue, place DLC archives into the installation directory or
 "workshop" and make sure their filenames don't contain spaces.
 
 
+Credits
+~~~~~~~
+
+Coding and testing: Argent77
+
+Brazilian Portuguese translation: Felipe
+
+
 Copyright Notice
 ~~~~~~~~~~~~~~~~
 
@@ -72,6 +80,9 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 
 History
 ~~~~~~~
+
+1.4
+- Added Brazilian Portuguese translation (thanks Felipe)
 
 1.3
 - Added German translation
