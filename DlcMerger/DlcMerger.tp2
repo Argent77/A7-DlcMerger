@@ -1,8 +1,13 @@
-BACKUP ~DlcMerger/backup~
+BACKUP ~weidu_external/backup/DlcMerger~
 SUPPORT ~https://forums.beamdog.com/discussion/71305~
 VERSION ~1.3~
 
 ALWAYS
+  // required because of non-standard BACKUP path
+  OUTER_TEXT_SPRINT MOD_FOLDER ~DlcMerger~
+  // root folder for mutable data
+  OUTER_TEXT_SPRINT WORK_FOLDER ~weidu_external~
+
   INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~
 
   ACTION_IF (~%WEIDU_OS%~ STR_EQ ~win32~) BEGIN
@@ -10,10 +15,10 @@ ALWAYS
   END ELSE BEGIN
     OUTER_TEXT_SPRINT unzip ~unzip~
   END
-  OUTER_TEXT_SPRINT path_temp ~%MOD_FOLDER%/temp~
+  OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%/temp/%MOD_FOLDER%~
 END
 
-README ~%MOD_FOLDER%/readme/readme-%LANGUAGE%.txt~ ~%MOD_FOLDER%/readme/readme.txt~
+README ~DlcMerger/readme/readme-%LANGUAGE%.txt~ ~DlcMerger/readme/readme.txt~
 
 LANGUAGE ~English~
          ~english~

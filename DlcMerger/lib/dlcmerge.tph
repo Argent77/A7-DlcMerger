@@ -17,7 +17,7 @@ BEGIN
   OUTER_SET failed = 0
 
   ACTION_IF (~%path_temp%~ STR_EQ ~~) BEGIN
-    OUTER_TEXT_SPRINT path_temp ~%MOD_FOLDER%/temp~
+    OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%/temp/%MOD_FOLDER%~
   END
 
   LAF GET_DLC_INFO
