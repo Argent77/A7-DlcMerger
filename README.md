@@ -1,13 +1,13 @@
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Argent77/A7-DlcMerger?color=darkred&include_prereleases&label=latest%20release)](https://GitHub.com/Argent77/A7-DlcMerger/releases/latest)
-[![GitHub release date (latest by date)](https://img.shields.io/github/release-date/Argent77/A7-DlcMerger?color=gold)](https://GitHub.com/Argent77/A7-DlcMerger/releases/latest)
-[![Github downloads (all releases)](https://img.shields.io/github/downloads/Argent77/A7-DlcMerger/total.svg?color=blueviolet)](https://GitHub.com/Argent77/A7-DlcMerger/releases)
-[![Platform](https://img.shields.io/static/v1?label=platform&message=Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20Project%20Infinity&color=informational)](https://GitHub.com/Argent77/A7-DlcMerger/releases/latest)
-[![Language](https://img.shields.io/static/v1?label=language&message=English%20%7C%20German%20%7C%20Brazilian%20Portuguese&color=limegreen)]()
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Argent77/A7-DlcMerger?color=darkred&include_prereleases&label=latest%20release)](https://github.com/Argent77/A7-DlcMerger/releases/latest)
+[![Github downloads (all releases)](https://img.shields.io/github/downloads/Argent77/A7-DlcMerger/total.svg?color=gold)](https://github.com/Argent77/A7-DlcMerger/releases)
+[![Platform](https://img.shields.io/static/v1?label=platform&message=Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20Project%20Infinity&color=informational)](https://github.com/Argent77/A7-DlcMerger/releases/latest)
+[![Supported games](https://img.shields.io/static/v1?label=supported%20games&message=BG%3AEE%20%7C%20SoD%20%7C%20BG2%3AEE%20%7C%20EET%20%7C%20IWD%3AEE%20%7C%20PST%3AEE&color=indigo)](https://github.com/Argent77/A7-DlcMerger)
+[![Language](https://img.shields.io/static/v1?label=language&message=English%20%7C%20German%20%7C%20Brazilian%20Portuguese&color=limegreen)](https://github.com/Argent77/A7-DlcMerger)
 
 # DLC Merger
 *Allows you to merge DLC archives into Infinity Engine Enhanced Edition games.*
 
-[![Beamdog Forums](https://img.shields.io/static/v1?label=Discussion&message=Beamdog%20Forums&color=444&labelColor=eee&style=flat)](https://forums.beamdog.com/discussion/71305)
+[![Beamdog Forums](https://img.shields.io/static/v1?label=Discussion&message=Beamdog%20Forums&color=444&labelColor=eee&style=for-the-badge)](https://forums.beamdog.com/discussion/71305 "Beamdog Forums")
 
 ## Overview
 Enhanced Edition games provide a feature that lets you use self-contained DLC archives to add or modify content. Best known example is the *"Siege of Dragonspear"* expansion, which comes as a DLC archive on GOG and Steam platforms.
