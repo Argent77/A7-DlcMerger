@@ -37,6 +37,7 @@ BEGIN @1  // "Siege of Dragonspear" DLC
 REQUIRE_PREDICATE (GAME_IS ~bgee~) @50 // Baldur's Gate: Enhanced Edition required.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 1
+LABEL ~A7-DLCMERGER-MERGE_SOD~
 
 ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
   ABORT @54 // Siege of Dragonspear DLC already merged.
@@ -60,6 +61,7 @@ BEGIN @2  // User-defined DLC
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 2
+LABEL ~A7-DLCMERGER-MERGE_CUSTOM_DLC~
 
 OUTER_SET finished = 0
 OUTER_WHILE (NOT finished) BEGIN
@@ -99,6 +101,7 @@ REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition
 REQUIRE_PREDICATE (NOT ~%WEIDU_ARCH%~ STR_EQ ~x86~) @53 // Does not currently work with 32-bit WeiDU installer.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 3
+LABEL ~A7-DLCMERGER-MERGE_ALL_DLCS~
 
 OUTER_SET chitin_backup = 0
 ACTION_FOR_EACH path IN ~%USER_DIRECTORY%~ ~.~ ~dlc~ ~workshop~ BEGIN

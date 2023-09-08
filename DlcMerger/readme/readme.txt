@@ -83,6 +83,7 @@ History
 
 1.4
 - Added Brazilian Portuguese translation (thanks Felipe)
+- Added component labels for Project Infinity
 
 1.3
 - Added German translation
