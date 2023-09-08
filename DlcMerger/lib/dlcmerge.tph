@@ -1,5 +1,10 @@
 INCLUDE ~%MOD_FOLDER%/lib/functions.tph~
 
+// Available error codes for MERGE_DLC: RET code
+OUTER_SET ERROR_DLC_INVALID     = 1 // Not a DLC archive
+OUTER_SET ERROR_DLC_UNPACK      = 2 // Could not unpack DLC archive
+OUTER_SET ERROR_DLC_MERGE_KEYS  = 3 // Could not merge DLC key file
+
 DEFINE_ACTION_FUNCTION MERGE_DLC
 INT_VAR
   fail_on_error = 1
@@ -9,9 +14,11 @@ STR_VAR
   path_unzip  = ~unzip~
 RET
   success   // success status
+  code      // error code if success != 0 (see code constants above)
   message   // error message on failure
 BEGIN
   OUTER_SET success = 0
+  OUTER_SET code = 0
   OUTER_TEXT_SPRINT message ~~
 
   OUTER_SET failed = 0
@@ -34,6 +41,7 @@ BEGIN
     success
   END
   ACTION_IF (NOT success) BEGIN
+    OUTER_SET code = ERROR_DLC_INVALID
     ACTION_IF (fail_on_error) BEGIN
       FAIL @200 // DLC archive is corrupt or incomplete.
     END ELSE BEGIN
@@ -47,6 +55,7 @@ BEGIN
     MKDIR ~%path_temp%~
     AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~
     ACTION_IF (ret_val != 0) BEGIN
+      OUTER_SET code = ERROR_DLC_UNPACK
       DELETE + ~%path_temp%~
       ACTION_IF (fail_on_error) BEGIN
         FAIL @202 // Could not unpack DLC archive.
@@ -70,6 +79,7 @@ BEGIN
     PRINT @100  // Merging keys...
     AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" mod.key -d "%path_temp%"~
     ACTION_IF (ret_val != 0 || NOT FILE_EXISTS ~%path_temp%/mod.key~) BEGIN
+      OUTER_SET code = ERROR_DLC_UNPACK
       DELETE + ~%path_temp%~
       ACTION_IF (fail_on_error) BEGIN
         FAIL @200 // DLC archive is corrupt or incomplete.
@@ -89,6 +99,7 @@ BEGIN
         merge_success = success
       END
       ACTION_IF (NOT merge_success) BEGIN
+        OUTER_SET code = ERROR_DLC_MERGE_KEYS
         DELETE + ~%path_temp%~
         ACTION_IF (fail_on_error) BEGIN
           FAIL @201 // Unable to merge keys.

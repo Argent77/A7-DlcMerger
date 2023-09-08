@@ -38,7 +38,7 @@ BEGIN
     END ELSE BEGIN
       OUTER_TEXT_SPRINT null ~/dev/null~
     END
-    AT_NOW ret_val ~%unzip% -l "%path_dlc%" mod.key >%null%~
+    AT_NOW ret_val ~%unzip% -l "%path_dlc%" mod.key >%null% 2>&1~
     OUTER_SET success = (ret_val = 0) ? 1 : 0
   END
 END

@@ -1,26 +1,27 @@
 @0 = ~Unir o DLC no game~
 @1 = ~Unir o DLC "Siege of Dragonspear"~
-@2 = ~Unir o DLC definido pelo usu·rio~
-@3 = ~Unir todos os DLCs disponÌveis~
+@2 = ~Unir o DLC definido pelo usu√°rio~
+@3 = ~Unir todos os DLCs dispon√≠veis~
 
-@50 = ~… requerido o Baldur's Gate: Enhanced Edition.~
-@51 = ~… requerido o DLC "Siege of Dragonspear".~
-@52 = ~… requerido a vers„o Enhanced Edition do jogo.~
-@53 = ~N„o funciona no momento com instalador WeiDU de 32 bits.~
-@54 = ~O DLC Siege of Dragonspear j· foi unido.~
+@50 = ~√â requerido o Baldur's Gate: Enhanced Edition.~
+@51 = ~√â requerido o DLC "Siege of Dragonspear".~
+@52 = ~√â requerido a vers√£o Enhanced Edition do jogo.~
+@53 = ~N√£o funciona no momento com instalador WeiDU de 32 bits.~
+@54 = ~O DLC Siege of Dragonspear j√° foi unido.~
 
 @100 = ~Unindo as chaves...~
 @101 = ~Desempacotando o arquivo DLC. Isto pode demorar um pouco...~
 
-@200 = ~O arquivo DLC est· corrompido ou incompleto.~
+@200 = ~O arquivo DLC est√° corrompido ou incompleto.~
 @201 = ~Incapaz de unir as chaves.~
-@202 = ~N„o pÙde desempacotar o arquivo DLC.~
+@202 = ~N√£o p√¥de desempacotar o arquivo DLC.~
 
-@300 = ~Insira o nome do arquivo DLC (sem caminho ou extens„o):~
-@301 = ~Por favor insira o nome do arquivo DLC sem caminho ou extens„o.~
-@302 = ~N„o pÙde achar o DLC "%dlc_name%". Tentar de novo (s/n)?~
-@303 = ~OperaÁ„o de uni„o cancelada.~
+@300 = ~Insira o nome do arquivo DLC (sem caminho ou extens√£o):~
+@301 = ~Por favor insira o nome do arquivo DLC sem caminho ou extens√£o.~
+@302 = ~N√£o p√¥de achar o DLC "%dlc_name%". Tentar de novo (s/n)?~
+@303 = ~Opera√ß√£o de uni√£o cancelada.~
 
 @400 = ~Unindo o DLC "%dlc_name%"...~
-@401 = ~N„o foram achados arquivos DLC. InstalaÁ„o cancelada.~
+@401 = ~N√£o foram achados arquivos DLC v√°lidos. Instala√ß√£o cancelada.~
 @402 = ~Falhou em unir o arquivo DLC "%dlc_name%". (Mensagem: %message%)~
+@403 = ~Ignorando o "%dlc_name%": N√£o √© um arquivo DLC.~

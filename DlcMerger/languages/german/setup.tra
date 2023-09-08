@@ -22,8 +22,9 @@
 @303 = ~Zusammenfuehrung wurde abgebrochen.~
 
 @400 = ~DLC "%dlc_name%" wird zusammengefuehrt...~
-@401 = ~Es wurden keine DLC-Dateien gefunden. Installation wird abgebrochen.~
+@401 = ~Es wurden keine gueltigen DLC-Dateien gefunden. Installation wird abgebrochen.~
 @402 = ~DLC-Datei "%dlc_name%" konnte nicht zusammengefuehrt werden. (Meldung: %message%)~
+@403 = ~Ueberspringe "%dlc_name%": Keine DLC-Datei.~
 
 
 // WeiDU prompts

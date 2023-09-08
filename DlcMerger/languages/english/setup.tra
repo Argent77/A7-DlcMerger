@@ -22,5 +22,6 @@
 @303 = ~Merge operation cancelled.~
 
 @400 = ~Merging DLC "%dlc_name%"...~
-@401 = ~No DLC archives found. Installation cancelled.~
+@401 = ~No valid DLC archives found. Installation cancelled.~
 @402 = ~Failed to merge DLC archive "%dlc_name%". (Message: %message%)~
+@403 = ~Skipping "%dlc_name%": Not a DLC archive.~
