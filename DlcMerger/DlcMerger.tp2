@@ -31,6 +31,10 @@ LANGUAGE ~Brazilian Portuguese (Translation by Felipe)~
          ~brazilianportuguese~
          ~DlcMerger/languages/english/setup.tra~
          ~DlcMerger/languages/brazilianportuguese/setup.tra~
+LANGUAGE ~Spanish (Translation by ElGamerViejuno)~
+         ~spanish~
+         ~DlcMerger/languages/english/setup.tra~
+         ~DlcMerger/languages/spanish/setup.tra~
 
 
 BEGIN @1  // "Siege of Dragonspear" DLC

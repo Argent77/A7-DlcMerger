@@ -1,0 +1,27 @@
+@0 = ~Fusionar el DLC con el juego~
+@1 = ~Fusionar el DLC "Siege of Dragonspear"~
+@2 = ~Fusionar el DLC definido por el usuario~
+@3 = ~Fusionar todos los DLC disponibles~
+
+@50 = ~Se requiere Baldur's Gate: Enhanced Edition.~
+@51 = ~Se requiere el DLC "Siege of Dragonspear".~
+@52 = ~Se requiere la version Enhanced Edition del juego.~
+@53 = ~Actualmente no funciona con el instalador WeiDU de 32 bits.~
+@54 = ~Ya se ha fusionado el DLC "Siege of Dragonspear".~
+
+@100 = ~Fusionando llaves...~
+@101 = ~Desenpaquetando el archivo DLC. Esto puede llevar un rato...~
+
+@200 = ~El archivo DLC esta corrupto o incompleto.~
+@201 = ~No se pueden fusionar las llaves.~
+@202 = ~No se ha podido desempaquetar el archivo DLC.~
+
+@300 = ~Introduce el nombre del archivo DLC (sin ruta ni extension):~
+@301 = ~Por favor, introduce el nombre del archivo DLC sin ruta ni extensión.~
+@302 = ~No se encuentra el DLC "%dlc_name%". Intentar de nuevo (y/n)?~
+@303 = ~Operacion de fusionado cancelada.~
+
+@400 = ~Fusionando DLC "%dlc_name%"...~
+@401 = ~No se han encontrado archivos DLC validos. Instalacion cancelada.~
+@402 = ~Fallo en la fusion del archivo DLC "%dlc_name%" (Mensaje: %message%).~
+@403 = ~Saltando "%dlc_name%": No es un archivo DLC.~
