@@ -18,7 +18,7 @@
 
 @300 = ~Insira o nome do arquivo DLC (sem caminho ou extensão):~
 @301 = ~Por favor insira o nome do arquivo DLC sem caminho ou extensão.~
-@302 = ~Não pôde achar o DLC "%dlc_name%". Tentar de novo (s/n)?~
+@302 = ~Não pôde achar o DLC "%dlc_name%". Tentar de novo (y/n)?~
 @303 = ~Operação de união cancelada.~
 
 @400 = ~Unindo o DLC "%dlc_name%"...~
