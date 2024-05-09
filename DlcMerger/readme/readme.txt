@@ -72,6 +72,8 @@ Brazilian Portuguese translation: Felipe
 
 Spanish translation: ElGamerViejuno
 
+Simplified Chinese translation: MephistoSatanDevil
+
 
 Copyright Notice
 ~~~~~~~~~~~~~~~~
@@ -82,6 +84,9 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 
 History
 ~~~~~~~
+
+1.6
+- Added Simplified Chinese translation (thanks MephistoSatanDevil)
 
 1.5
 - Added Spanish translation (thanks ElGamerViejuno)
