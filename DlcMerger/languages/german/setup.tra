@@ -15,6 +15,7 @@
 @200 = ~DLC-Datei ist fehlerhaft oder unvollstaendig.~
 @201 = ~Schluesseleintraege konnten nicht zusammengefuehrt werden.~
 @202 = ~DLC-Datei konnte nicht entpackt werden.~
+@203 = ~WARNUNG: DLC-Datei konnte nicht umbenannt werden. Bitte benenne "%dlc_filespec%" manuell in "%dlc_res%.disabled" um.~
 
 @300 = ~DLC-Dateiname eingeben (ohne Pfad und Dateierweiterung):~
 @301 = ~Geben Sie bitte den DLC-Dateinamen ohne Pfad und Dateierweiterung an.~

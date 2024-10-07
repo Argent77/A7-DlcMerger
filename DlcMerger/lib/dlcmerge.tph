@@ -115,9 +115,20 @@ BEGIN
     DELETE + ~%path_temp%~
     // TODO: MOVE currently fails if paths contain spaces
     ACTION_IF (~%dlc_filespec%~ STRING_CONTAINS_REGEXP ~[ %TAB%]~ = 0) BEGIN
-      PRINT ~IMPORTANT: Please rename "%dlc_filespec%" to "%dlc_res%.disabled".~
+      WARN @203 // WARNING: Unable to rename DLC file. Please rename "%dlc_filespec%" to "%dlc_res%.disabled" manually.
     END ELSE BEGIN
+      ACTION_IF (FILE_EXISTS ~%dlc_directory%/%dlc_res%.disabled~) BEGIN
+        ACTION_IF (SIZE_OF_FILE ~%dlc_directory%/%dlc_res%.disabled~ = SIZE_OF_FILE ~%dlc_filespec%~) BEGIN
+          // most likely a remnant from a previous operation: remove permanently
+          DELETE + ~%dlc_directory%/%dlc_res%.disabled~
+        END ELSE BEGIN
+          DELETE ~%dlc_directory%/%dlc_res%.disabled~
+        END
+      END
       MOVE ~%dlc_filespec%~ ~%dlc_directory%/%dlc_res%.disabled~
+      ACTION_IF (FILE_EXISTS ~%dlc_filespec%~) BEGIN
+        WARN @203 // WARNING: Unable to rename DLC file. Please rename "%dlc_filespec%" to "%dlc_res%.disabled" manually.
+      END
     END
     OUTER_SET success = 1
   END

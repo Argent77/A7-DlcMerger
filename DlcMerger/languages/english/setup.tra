@@ -15,6 +15,7 @@
 @200 = ~DLC archive is corrupt or incomplete.~
 @201 = ~Unable to merge keys.~
 @202 = ~Could not unpack DLC archive.~
+@203 = ~WARNING: Unable to rename DLC file. Please manually rename "%dlc_filespec%" to "%dlc_res%.disabled".~
 
 @300 = ~Enter DLC filename (without path or extension):~
 @301 = ~Please enter DLC filename without path or extension.~
