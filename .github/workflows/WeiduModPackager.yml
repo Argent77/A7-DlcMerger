@@ -1,0 +1,48 @@
+# WeiDU Mod Packager by Argent77
+# See: https://github.com/InfinityTools/WeiduModPackager
+
+name: 'WeiDU Mod Packager (iemod; lin/mac/win: amd64; win: x86; use git release tag name as suffix)'
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  call_workflow_amd64:
+    strategy:
+      matrix:
+        type: [iemod, linux, macos]
+
+    permissions:
+      contents: write
+
+    uses: InfinityTools/WeiduModPackagerLibrary/.github/workflows/WeiduModPackagerLibrary.yml@master
+    with:
+      type: ${{ matrix.type }}
+      architecture: amd64
+      suffix: ${{ github.event.release.tag_name }}
+
+  call_workflow_win_amd64:
+    permissions:
+      contents: write
+
+    uses: InfinityTools/WeiduModPackagerLibrary/.github/workflows/WeiduModPackagerLibrary.yml@master
+    with:
+      type: windows
+      architecture: amd64
+      prefix_windows: win-64bit
+      suffix: ${{ github.event.release.tag_name }}
+      naming: tp2
+
+  call_workflow_win_x86:
+    permissions:
+      contents: write
+
+    uses: InfinityTools/WeiduModPackagerLibrary/.github/workflows/WeiduModPackagerLibrary.yml@master
+    with:
+      type: windows
+      architecture: x86
+      prefix_windows: win-32bit
+      suffix: ${{ github.event.release.tag_name }}
+      naming: tp2
