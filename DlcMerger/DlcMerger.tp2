@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/DlcMerger~
 SUPPORT ~https://forums.beamdog.com/discussion/71305~
-VERSION ~1.6~
+VERSION ~1.7~
 
 ALWAYS
   // required because of non-standard BACKUP path

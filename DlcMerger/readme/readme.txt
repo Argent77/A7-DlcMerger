@@ -1,7 +1,7 @@
 DLC Merger
 ~~~~~~~~~~
 
-Version:    1.6
+Version:    1.7
 Author:     Argent77
 
 Download:   https://github.com/Argent77/A7-DlcMerger/releases
@@ -84,6 +84,10 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 
 History
 ~~~~~~~
+
+1.7
+- Updated Simplified Chinese translation
+- Improved error handling if merged DLC file wasn't properly renamed
 
 1.6
 - Added Simplified Chinese translation (thanks MephistoSatanDevil)
