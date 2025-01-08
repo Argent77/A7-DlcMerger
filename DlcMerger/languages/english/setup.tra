@@ -1,28 +1,28 @@
-@0 = ~Unir o DLC no jogo~
-@1 = ~Unir o DLC "Siege of Dragonspear"~
-@2 = ~Unir o DLC definido pelo usuário~
-@3 = ~Unir todos os DLCs disponíveis~
+@0 = ~Merge DLC into game~
+@1 = ~Merge "Siege of Dragonspear" DLC~
+@2 = ~Merge user-defined DLC~
+@3 = ~Merge all available DLCs~
 
-@50 = ~É requerido o Baldur's Gate: Enhanced Edition.~
-@51 = ~É requerido o DLC "Siege of Dragonspear".~
-@52 = ~É requerido a versão Enhanced Edition do jogo.~
-@53 = ~Não funciona no momento com o instalador WeiDU de 32 bits.~
-@54 = ~O DLC Siege of Dragonspear já foi unido.~
+@50 = ~Baldur's Gate: Enhanced Edition required.~
+@51 = ~Siege of Dragonspear DLC required.~
+@52 = ~Enhanced Edition game required.~
+@53 = ~Does not currently work with 32-bit WeiDU installer.~
+@54 = ~Siege of Dragonspear DLC already merged.~
 
-@100 = ~Unindo as chaves...~
-@101 = ~Desempacotando o arquivo compactado do DLC. Isto pode demorar um pouco...~
+@100 = ~Merging keys...~
+@101 = ~Unpacking DLC archive. This may take a while...~
 
-@200 = ~O arquivo do DLC está corrompido ou incompleto.~
-@201 = ~Incapaz de unir as chaves.~
-@202 = ~Não pôde desempacotar o arquivo compactado do DLC.~
-@203 = ~AVISO: Incapaz de renomear o arquivo do DLC. Por favor renomeie manualmente o "%dlc_filespec%" como "%dlc_res%.disabled".~
+@200 = ~DLC archive is corrupt or incomplete.~
+@201 = ~Unable to merge keys.~
+@202 = ~Could not unpack DLC archive.~
+@203 = ~WARNING: Unable to rename DLC file. Please manually rename "%dlc_filespec%" to "%dlc_res%.disabled".~
 
-@300 = ~Insira o nome do arquivo do DLC (sem caminho ou extensão):~
-@301 = ~Por favor insira o nome do arquivo do DLC sem caminho ou extensão.~
-@302 = ~Não pôde achar o DLC "%dlc_name%". Tentar de novo (s/n)?~
-@303 = ~Operação de união cancelada.~
+@300 = ~Enter DLC filename (without path or extension):~
+@301 = ~Please enter DLC filename without path or extension.~
+@302 = ~Could not find DLC "%dlc_name%". Try again (y/n)?~
+@303 = ~Merge operation cancelled.~
 
-@400 = ~Unindo o DLC "%dlc_name%"...~
-@401 = ~Não foram achados arquivos compactados do DLC. Instalação cancelada.~
-@402 = ~Falhou em unir o arquivo compactado do DLC "%dlc_name%". (Mensagem: %message%)~
-@403 = ~Ignorando o "%dlc_name%": Não é um arquivo compactado com DLC.~
+@400 = ~Merging DLC "%dlc_name%"...~
+@401 = ~No valid DLC archives found. Installation cancelled.~
+@402 = ~Failed to merge DLC archive "%dlc_name%". (Message: %message%)~
+@403 = ~Skipping "%dlc_name%": Not a DLC archive.~
