@@ -85,6 +85,9 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 History
 ~~~~~~~
 
+1.8
+- Added check for "unzip" presence on Linux and macOS platforms
+
 1.7
 - Updated Simplified Chinese translation
 - Improved error handling if merged DLC file wasn't properly renamed

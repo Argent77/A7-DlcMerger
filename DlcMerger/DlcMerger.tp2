@@ -14,6 +14,11 @@ ALWAYS
     OUTER_TEXT_SPRINT unzip ~%MOD_FOLDER%/tools/win32/unzip.exe~
   END ELSE BEGIN
     OUTER_TEXT_SPRINT unzip ~unzip~
+    // Checking presence of unzip on the system
+    AT_NOW ret_val ~which %unzip% >/dev/null 2>&1~
+    ACTION_IF (ret_val != 0) BEGIN
+      FAIL @204 // The command "unzip" could not be found on the system.
+    END
   END
   OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%/temp/%MOD_FOLDER%~
 END
