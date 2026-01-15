@@ -24,7 +24,7 @@ BEGIN
   OUTER_SET failed = 0
 
   ACTION_IF (~%path_temp%~ STR_EQ ~~) BEGIN
-    OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%/temp/%MOD_FOLDER%~
+    OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%%slash%temp%slash%%MOD_FOLDER%~
   END
 
   LAF GET_DLC_INFO
@@ -53,7 +53,7 @@ BEGIN
   ACTION_IF (NOT failed) BEGIN
     PRINT @101  // Unpacking DLC archive. This may take a while...
     MKDIR ~%path_temp%~
-    AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~
+    AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" -x mod.key -d "%path_temp%"~ EXACT
     ACTION_IF (ret_val != 0) BEGIN
       OUTER_SET code = ERROR_DLC_UNPACK
       DELETE + ~%path_temp%~
@@ -77,7 +77,7 @@ BEGIN
     END
 
     PRINT @100  // Merging keys...
-    AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" mod.key -d "%path_temp%"~
+    AT_NOW ret_val ~%unzip% -oqq "%dlc_filespec%" mod.key -d "%path_temp%"~ EXACT
     ACTION_IF (ret_val != 0 || NOT FILE_EXISTS ~%path_temp%/mod.key~) BEGIN
       OUTER_SET code = ERROR_DLC_UNPACK
       DELETE + ~%path_temp%~
