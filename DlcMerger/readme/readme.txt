@@ -87,6 +87,7 @@ History
 
 1.8
 - Added check for "unzip" presence on Linux and macOS platforms
+- Fixed issue that prevented the mod from installing on case-sensitive filesystems on Linux
 
 1.7
 - Updated Simplified Chinese translation
