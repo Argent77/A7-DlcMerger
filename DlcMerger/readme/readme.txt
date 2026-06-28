@@ -74,6 +74,8 @@ Spanish translation: ElGamerViejuno
 
 Simplified Chinese translation: MephistoSatanDevil
 
+French translation: Deratiseur
+
 
 Copyright Notice
 ~~~~~~~~~~~~~~~~

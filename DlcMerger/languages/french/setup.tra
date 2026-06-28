@@ -1,0 +1,29 @@
+@0 = ~Integrer le DLC au jeu~
+@1 = ~Integrer le DLC "Siege of Dragonspear"~
+@2 = ~Integrer le DLC defini par l'utilisateur~
+@3 = ~Intégrer tous les DLC disponibles~
+
+@50 = ~Necessite Baldur's Gate : Enhanced Edition.~
+@51 = ~Necessite le DLC "Siege of Dragonspear".~
+@52 = ~Necessite le jeu en version Enhanced Edition.~
+@53 = ~Ne fonctionne pas actuellement avec le programme d'installation WeiDU 32 bits.~
+@54 = ~Le DLC « Siege of Dragonspear » est deja integre.~
+
+@100 = ~Fusion des cles...~
+@101 = ~Décompression de l'archive DLC. Cela peut prendre un certain temps...~
+
+@200 = ~L'archive DLC est corrompue ou incomplete.~
+@201 = ~Impossible de fusionner les cles.~
+@202 = ~Impossible de decompresser l'archive DLC.~
+@203 = ~AVERTISSEMENT : impossible de renommer le fichier DLC. Veuillez renommer manuellement « %dlc_filespec% » en « %dlc_res%.disabled ».~
+@204 = ~La commande "unzip" est introuvable sur le systeme.~
+
+@300 = ~Entrez le nom du fichier DLC (sans chemin ni extension) :~
+@301 = ~Veuillez entrer le nom du fichier DLC sans chemin ni extension.~
+@302 = ~Impossible de trouver le DLC « %dlc_name% ». Voulez-vous reessayer (o/n) ?~
+@303 = ~Operation de fusion annulee.~
+
+@400 = ~Fusion du DLC "%dlc_name%"...~
+@401 = ~Aucune archive DLC valide trouvee. Installation annulee.~
+@402 = ~Echec de la fusion de l'archive DLC "%dlc_name%". (Message : %message%)~
+@403 = ~Ignorer "%dlc_name%" : ce n'est pas une archive DLC.~
