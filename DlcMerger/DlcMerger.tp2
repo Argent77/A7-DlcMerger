@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/DlcMerger~
 SUPPORT ~https://forums.beamdog.com/discussion/71305~
-VERSION ~1.8~
+VERSION ~2.0~
 
 ALWAYS
   // root folder for mutable data
