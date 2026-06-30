@@ -35,7 +35,7 @@ Merges a single DLC archive with the game. The mod prompts for the name of the D
 
 This option scans all supported DLC search paths of the game for available DLC archives. Each DLC will be merged in the same order as it would be loaded by the game, so that multiple DLC archives may safely override files from other DLCs without causing issues. Because of technical reasons, this operation is currently only successful if the mod is invoked by a 64-bit WeiDU installer.
 
-### 4. "Siege of Dragonspear" language selection fix (requires merged SoD DLC)
+#### 4. "Siege of Dragonspear" language selection fix (requires merged SoD DLC)
 
 This optional component may be required for game patch 2.7 to restore language selection in the SoD campaign.
 
