@@ -63,6 +63,13 @@ To work around this issue, place DLC archives into the installation directory or
 "workshop" and make sure their filenames don't contain spaces.
 
 
+4. "Siege of Dragonspear" language selection fix (requires merged SoD DLC)
+
+This optional component may be required for game patch 2.7 to restore language selection in the SoD campaign.
+
+It should be installed directly after Siege of Dragonspear has been merged to prevent compatibility issues.
+
+
 Credits
 ~~~~~~~
 

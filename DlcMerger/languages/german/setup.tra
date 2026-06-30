@@ -3,11 +3,15 @@
 @2 = ~Eine benutzerdefinierte DLC zusammenfuehren~
 @3 = ~Alle vorhandenen DLCs zusammenfuehren~
 
+@10 = ~Korrektur der Sprachauswahl von "Belagerung von Drachenspeer"~
+
 @50 = ~Das Spiel "Baldur's Gate: Enhanced Edition" wird benoetigt.~
 @51 = ~Die DLC "Belagerung von Drachenspeer" wird benoetigt.~
 @52 = ~Ein "Enhanced Edition"-Spiel wird benoetigt.~
 @53 = ~Funktioniert nicht mit der 32-Bit-Version des Weidu-Installationsprogramms.~
 @54 = ~"Belagerung von Drachenspeer" wurde bereits zusammengefuehrt.~
+@55 = ~Zusammenfuehrung von "Belagerung von Drachenspeer" wird benoetigt. (Die Modinstallation muss ggf. neu aufgerufen werden, damit das Spiel korrekt erkannt wird.)~
+@56 = ~Korrektur der Sprachauswahl ist nicht notwendig.~
 
 @100 = ~Schluesseleintraege zusammenfuehren...~
 @101 = ~DLC-Datei wird entpackt. Dies kann eine Weile dauern...~

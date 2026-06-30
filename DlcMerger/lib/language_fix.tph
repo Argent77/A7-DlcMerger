@@ -1,0 +1,44 @@
+// required to stop the game from looking for files exclusively in the DLC zip archive
+COPY_EXISTING ~ui.menu~ ~override~
+  REPLACE_TEXTUALLY ~Infinity_GetFileExistsInZip~ ~Infinity_GetFileExists~
+BUT_ONLY IF_EXISTS
+
+
+// removing language entries from the selection list that don't provide SoD strings
+GET_DIRECTORY_ARRAY lang_folders ~lang~ ~^.._..$~
+ACTION_PHP_EACH lang_folders AS _ => path BEGIN
+  SILENT
+  COPY ~%path%/dialog.tlk~ ~%path%/dialog.tlk~
+    READ_LONG 0x0a num_entries
+    PATCH_IF (num_entries <= 34000) BEGIN
+      INNER_PATCH_SAVE lang_id ~%path%~ BEGIN REPLACE_TEXTUALLY ~^.*\([a-z][a-z]_[A-Z][A-Z]\)$~ ~\1~ END
+      PATCH_IF (STRING_LENGTH ~%lang_id%~ == 5) BEGIN
+        SET $languages(~%lang_id%~) = 1
+      END
+    END
+  BUT_ONLY IF_EXISTS
+  VERBOSE
+END
+
+COPY_EXISTING ~BGEE.LUA~ ~override~
+  SET ofs1 = INDEX_BUFFER(~sodZipLanguages[ %TAB%]*=[ %TAB%]*{~)
+  PATCH_IF (ofs1 >= 0) BEGIN
+    SET ofs2 = INDEX_BUFFER(~}[ %TAB%%WNL%]*}~ ofs1)
+    PATCH_IF (ofs2 > ofs1) BEGIN
+      SET ofs2 += 1
+      SET old_size = ofs2 - ofs1
+      READ_ASCII ofs1 block (old_size)
+      INNER_PATCH_SAVE new_block ~%block%~ BEGIN
+        PHP_EACH languages AS lang_id => _ BEGIN
+          REPLACE_TEXTUALLY ~^\([ %TAB%]*{'%lang_id%',\)~ ~-- \1~
+        END
+      END
+      SET new_size = STRING_LENGTH ~%new_block%~
+      PATCH_IF (new_size != old_size) BEGIN
+        DELETE_BYTES ofs1 old_size
+        INSERT_BYTES ofs1 new_size
+      END
+      WRITE_ASCIIE ofs1 ~%new_block%~ (new_size)
+    END
+  END
+BUT_ONLY

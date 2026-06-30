@@ -6,21 +6,23 @@ ALWAYS
   // root folder for mutable data
   OUTER_TEXT_SPRINT WORK_FOLDER ~weidu_external~
 
-  INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~
+  ACTION_IF (COMPONENT_NUMBER < 10) BEGIN
+    INCLUDE ~%MOD_FOLDER%/lib/dlcmerge.tph~
 
-  ACTION_IF (~%WEIDU_OS%~ STR_EQ ~win32~) BEGIN
-    OUTER_TEXT_SPRINT slash ~\~
-    OUTER_TEXT_SPRINT unzip ~%MOD_FOLDER%%slash%tools%slash%win32%slash%unzip.exe~
-  END ELSE BEGIN
-    OUTER_TEXT_SPRINT slash ~/~
-    OUTER_TEXT_SPRINT unzip ~unzip~
-    // Checking presence of unzip on the system
-    AT_NOW ret_val ~which %unzip% >/dev/null 2>&1~ EXACT
-    ACTION_IF (ret_val != 0) BEGIN
-      FAIL @204 // The command "unzip" could not be found on the system.
+    ACTION_IF (~%WEIDU_OS%~ STR_EQ ~win32~) BEGIN
+      OUTER_TEXT_SPRINT slash ~\~
+      OUTER_TEXT_SPRINT unzip ~%MOD_FOLDER%%slash%tools%slash%win32%slash%unzip.exe~
+    END ELSE BEGIN
+      OUTER_TEXT_SPRINT slash ~/~
+      OUTER_TEXT_SPRINT unzip ~unzip~
+      // Checking presence of unzip on the system
+      AT_NOW ret_val ~which %unzip% >/dev/null 2>&1~ EXACT
+      ACTION_IF (ret_val != 0) BEGIN
+        FAIL @204 // The command "unzip" could not be found on the system.
+      END
     END
+    OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%%slash%temp%slash%%MOD_FOLDER%~
   END
-  OUTER_TEXT_SPRINT path_temp ~%WORK_FOLDER%%slash%temp%slash%%MOD_FOLDER%~
 END
 
 README ~DlcMerger/readme/readme-%LANGUAGE%.txt~ ~DlcMerger/readme/readme.txt~
@@ -178,3 +180,12 @@ END
 ACTION_IF (NOT chitin_backup || merge_count = 0) BEGIN
   ABORT @401 // No valid DLC archives found. Installation cancelled.
 END
+
+
+BEGIN @10 // "Siege of Dragonspear" language selection fix
+REQUIRE_PREDICATE (GAME_IS ~bgee~ && GAME_INCLUDES ~sod~) @55 // Merged "Siege of Dragonspear" campaign required. (You may have to restart the mod to properly detect the game.)
+REQUIRE_PREDICATE (RESOURCE_CONTAINS ~ui.menu~ ~Infinity_GetFileExistsInZip~) @56 // Language selection fix not needed.
+DESIGNATED 10
+LABEL ~A7-DLCMERGER-FIX_LANGUAGE_SELECTION~
+
+INCLUDE ~%MOD_FOLDER%/lib/language_fix.tph~
