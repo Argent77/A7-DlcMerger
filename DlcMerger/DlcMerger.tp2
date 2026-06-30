@@ -183,7 +183,7 @@ END
 
 
 BEGIN @10 // "Siege of Dragonspear" language selection fix
-REQUIRE_PREDICATE (GAME_IS ~bgee~ && GAME_INCLUDES ~sod~) @55 // Merged "Siege of Dragonspear" campaign required. (You may have to restart the mod to properly detect the game.)
+REQUIRE_PREDICATE (GAME_IS ~bgee~ && GAME_INCLUDES ~sod~) @55 // Merged "Siege of Dragonspear" campaign required. (You may have to restart the mod installer to properly detect the game.)
 REQUIRE_PREDICATE (RESOURCE_CONTAINS ~ui.menu~ ~Infinity_GetFileExistsInZip~) @56 // Language selection fix not needed.
 DESIGNATED 10
 LABEL ~A7-DLCMERGER-FIX_LANGUAGE_SELECTION~
