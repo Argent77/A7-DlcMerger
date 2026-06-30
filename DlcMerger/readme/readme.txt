@@ -94,6 +94,10 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 History
 ~~~~~~~
 
+2.0
+- Added French translation (thanks Deratiseur)
+- Added new component "Siege of Dragonspear language selection fix"
+
 1.8
 - Added check for "unzip" presence on Linux and macOS platforms
 - Fixed issue that prevented the mod from installing on case-sensitive filesystems on Linux
