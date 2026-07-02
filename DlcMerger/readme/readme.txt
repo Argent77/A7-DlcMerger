@@ -98,6 +98,10 @@ The mod "DLC Merger" is licensed under the "Creative Commons Attribution-ShareAl
 History
 ~~~~~~~
 
+2.1
+- Updated Simplified Chinese translation
+- Siege of Dragonspear language selection fix will be automatically applied by the main component (see note in readme)
+
 2.0
 - Added French translation (thanks Deratiseur)
 - Added new component "Siege of Dragonspear language selection fix"
