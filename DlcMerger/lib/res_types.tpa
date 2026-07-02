@@ -1,0 +1,90 @@
+// Resource types supported by the Infinity Engine
+ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+  // resource type => file extension
+  1 => "BMP"
+  2 => "MVE"
+  4 => "WAV"      // "WAVC", "RIFF" or Ogg Vorbis (EE only) format
+  5 => "WFX"
+  6 => "PLT"
+  1000 => "BAM"
+  1001 => "WED"
+  1002 => "CHU"
+  1003 => "TIS"
+  1004 => "MOS"
+  1005 => "ITM"
+  1006 => "SPL"
+  1007 => "BCS"
+  1008 => "IDS"
+  1009 => "CRE"
+  1010 => "ARE"
+  1011 => "DLG"
+  1012 => "2DA"
+  1013 => "GAM"
+  1014 => "STO"
+  1015 => "WMP"
+  1016 => "EFF"
+  1017 => "BS"
+  1018 => "CHR"
+  1019 => "VVC"
+  1021 => "PRO"
+  1022 => "BIO"
+END
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet iwdee pstee soa tob how totlm iwd2~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  1030 => "TOT"
+  1031 => "TOH"
+  END
+END
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet iwdee pstee soa tob~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  1020 => "VEF"
+  1100 => "BAH"
+  END
+END
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet iwdee pstee iwd how totlm iwd2 pst~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  2050 => "INI"
+  END
+END
+
+// EE-specific types
+ACTION_IF (GAME_IS ~bgee bg2ee eet iwdee pstee~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  1023 => "WBM"
+  1024 => "FNT"
+  1026 => "GUI"
+  1027 => "SQL"
+  1028 => "PVRZ"
+  1029 => "GLSL"
+  1032 => "MENU"
+  1033 => "LUA"
+  1034 => "TTF"
+  1035 => "PNG"
+  END
+END
+
+ACTION_IF (GAME_IS ~pst pstee~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  2051 => "SRC"
+  END
+END
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY res_types BEGIN
+    // resource type => file extension
+  2052 => "MAZE"
+  END
+END
+
+// Building reverse lookup table
+ACTION_PHP_EACH res_types AS code => ext BEGIN
+  OUTER_SET $res_codes(~%ext%~) = code
+END

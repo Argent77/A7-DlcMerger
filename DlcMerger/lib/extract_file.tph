@@ -1,0 +1,159 @@
+INCLUDE ~%MOD_FOLDER%/lib/res_types.tpa~
+
+/**
+ * Lods a game resource, either from the override folder, via regular WeiDU call, or directly from a BIFF archive,
+ * and returns it. Tilesets are not supported.
+ *
+ * INT_VAR from_key         Specify non-zero value to load the game resource manually from BIFF archives,
+ *                          effectively overriding WeiDU's own resource management.
+ *                          Specify 0 to let WeiDU handle resource loading.
+ * INT_VAR allow_override   Specifies whether to prefer files in the override folder over biffed resources if they exist.
+ * STR_VAR resref           Resource reference of the file to extract.
+ * STR_VAR ext              File extension (without leading dot).
+ * RET success              Returns whether the resource could be extracted successfully.
+ * RET buffer               Content of the extracted resource if the operation was successful. Empty buffer otherwise.
+ */
+DEFINE_ACTION_FUNCTION extract_file
+INT_VAR
+  allow_override = 1
+  from_key = 1
+STR_VAR
+  resref = ~~
+  ext = ~~
+RET
+  success
+  buffer
+BEGIN
+  OUTER_SET success = 0
+  OUTER_SPRINT buffer ~~
+
+  ACTION_IF (allow_override) BEGIN
+    LAF __extra_file_override STR_VAR resref ext RET success buffer END
+  END
+
+  ACTION_IF (NOT success) BEGIN
+    ACTION_IF (from_key) BEGIN
+      LAF __extra_file_key STR_VAR resref ext RET success buffer END
+    END ELSE ACTION_IF (allow_override || NOT FILE_EXISTS ~override/%resref%.%ext%~) BEGIN
+      LAF __extra_file_weidu STR_VAR resref ext RET success buffer END
+    END
+  END
+END
+
+
+// Used internally: Loads file from the override folder.
+DEFINE_ACTION_FUNCTION __extra_file_override
+STR_VAR
+  resref = ~~
+  ext = ~~
+RET
+  success
+  buffer
+BEGIN
+  OUTER_SET success = 0
+  OUTER_SPRINT buffer ~~
+
+  ACTION_IF (NOT ~%ext%~ STR_EQ ~TIS~ && FILE_EXISTS ~override/%resref%.%ext%~) BEGIN
+    COPY ~override/%resref%.%ext%~ ~override/%resref%.%ext%~
+      READ_ASCII 0 buffer (BUFFER_LENGTH)
+      SET success = 1
+    BUT_ONLY
+  END
+END
+
+// Used internally: Loads file by regular WeiDU operation.
+DEFINE_ACTION_FUNCTION __extra_file_weidu
+STR_VAR
+  resref = ~~
+  ext = ~~
+RET
+  success
+  buffer
+BEGIN
+  OUTER_SET success = 0
+  OUTER_SPRINT buffer ~~
+
+  ACTION_IF (NOT ~%ext%~ STR_EQ ~TIS~ && FILE_EXISTS_IN_GAME ~%resref%.%ext%~) BEGIN
+    COPY_EXISTING ~%resref%.%ext%~ ~override~
+      READ_ASCII 0 buffer (BUFFER_LENGTH)
+      SET success = 1
+    BUT_ONLY
+  END
+END
+
+// Used internally: Extracts file manually from CHITIN.KEY and linked BIFF archives.
+DEFINE_ACTION_FUNCTION __extra_file_key
+STR_VAR
+  resref = ~~
+  ext = ~~
+RET
+  success
+  buffer
+BEGIN
+  OUTER_SET success = 0
+  OUTER_SPRINT buffer ~~
+
+  // preparations
+  ACTION_TO_UPPER ~ext~
+  OUTER_SET resref_len = STRING_LENGTH ~%resref%~
+  OUTER_SET valid = (resref_len > 0 && resref_len <= 8)
+  OUTER_SET type = VARIABLE_IS_SET $res_codes(~%ext%~) ? $res_codes(~%ext%~) : "-1"
+  OUTER_SET valid = (type != $res_codes(~TIS~))
+
+  ACTION_IF (valid && type > 0) BEGIN
+    OUTER_SET file_index = "-1"
+    OUTER_SPRINT biff_path ~~
+
+    COPY ~chitin.key~ ~override~
+      READ_LONG 0x08 num_biffs
+      READ_LONG 0x0c num_entries
+      READ_LONG 0x10 ofs_biffs
+      READ_LONG 0x14 ofs_entries
+
+      // searching resource entry
+      SET entry_index = "-1"
+      FOR (i = num_entries - 1; i >= 0; --i) BEGIN
+        SET cur_ofs = ofs_entries + i * 0xe
+        READ_ASCII cur_ofs name (8) NULL
+        PATCH_IF (~%name%~ STR_EQ ~%resref%~) BEGIN
+          READ_SHORT (cur_ofs + 0x8) code
+          PATCH_IF (type == code) BEGIN
+            SET entry_index = i
+            READ_LONG (cur_ofs + 0xa) locator
+            SET i = 0
+          END
+        END
+      END
+
+      PATCH_IF (entry_index >= 0) BEGIN
+        SET biff_index = (locator >> 20) & (BIT12 - 1)
+        PATCH_IF (biff_index < num_biffs) BEGIN
+          SET file_index = locator & (BIT14 - 1)
+          SET cur_ofs = ofs_biffs + biff_index * 0xc
+          READ_LONG cur_ofs biff_size
+          READ_LONG (cur_ofs + 0x4) ofs_biff_name
+          READ_SHORT (cur_ofs + 0x8) biff_name_len
+          READ_ASCII ofs_biff_name biff_path (biff_name_len) NULL
+        END
+      END
+    BUT_ONLY
+
+    ACTION_IF (file_index >= 0 && FILE_EXISTS ~%biff_path%~) BEGIN
+      // extracting resource
+      COPY ~%biff_path%~ ~%biff_path%~
+        READ_LONG 0x08 num_files
+        PATCH_IF (file_index < num_files) BEGIN
+          READ_LONG 0x10 ofs_files
+          SET cur_ofs = ofs_files + file_index * 0x10
+          READ_LONG (cur_ofs + 0x4) ofs_data
+          READ_LONG (cur_ofs + 0x8) data_size
+          READ_SHORT (cur_ofs + 0xc) code
+          PATCH_IF (code == type) BEGIN
+            READ_ASCII ofs_data buffer (data_size)
+            SET success = 1
+          END
+        END
+      BUT_ONLY
+    END
+  END
+END

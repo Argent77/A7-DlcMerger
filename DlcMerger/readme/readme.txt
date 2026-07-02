@@ -69,6 +69,10 @@ This optional component may be required for game patch 2.7 to restore language s
 
 It should be installed directly after Siege of Dragonspear has been merged to prevent compatibility issues.
 
+Note: This fix will already be applied by the main component of the mod. However, for technical reasons the operation
+      will be skipped if the mod is invoked by a 32-bit Windows setup executable. In that case run the mod installer
+      again to install the fix manually.
+
 
 Credits
 ~~~~~~~

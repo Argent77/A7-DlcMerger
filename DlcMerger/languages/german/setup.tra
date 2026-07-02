@@ -15,6 +15,9 @@
 
 @100 = ~Schluesseleintraege zusammenfuehren...~
 @101 = ~DLC-Datei wird entpackt. Dies kann eine Weile dauern...~
+@102 = ~Korrektur der Sprachauswahl von "Belagerung von Drachenspeer" wird durchgefuehrt...~
+@103 = ~Korrektur der Sprachauswahl von "Belagerung von Drachenspeer" konnte nicht durchgefuehrt werden. Rufe die Modinstallation erneut auf, um die Korrektur manuell durchzufuehren.~
+@104 = ~WARNUNG: Datei %resource% konnte nicht korrigiert werden.~
 
 @200 = ~DLC-Datei ist fehlerhaft oder unvollstaendig.~
 @201 = ~Schluesseleintraege konnten nicht zusammengefuehrt werden.~

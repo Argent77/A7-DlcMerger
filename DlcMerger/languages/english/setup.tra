@@ -15,6 +15,9 @@
 
 @100 = ~Merging keys...~
 @101 = ~Unpacking DLC archive. This may take a while...~
+@102 = ~Applying "Siege of Dragonspear" language selection fix...~
+@103 = ~"Siege of Dragonspear" language selection fix could not be applied. Run the mod installer again to install the fix manually.~
+@104 = ~WARNING: Could not patch %resource%~
 
 @200 = ~DLC archive is corrupt or incomplete.~
 @201 = ~Unable to merge keys.~

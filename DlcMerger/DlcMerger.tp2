@@ -75,6 +75,10 @@ STR_VAR
   path_unzip  = EVAL ~%unzip%~
 END
 
+// Applying language selection fix
+INCLUDE ~%MOD_FOLDER%/lib/language_fix.tph~
+LAF fix_language INT_VAR from_key = 1 END
+
 
 BEGIN @2  // User-defined DLC
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
@@ -112,6 +116,12 @@ STR_VAR
   dlc_res     = EVAL ~%dlc_name%~
   path_temp
   path_unzip  = EVAL ~%unzip%~
+END
+
+ACTION_IF (~%dlc_name%~ STR_EQ ~sod-dlc~) BEGIN
+  // Applying language selection fix
+  INCLUDE ~%MOD_FOLDER%/lib/language_fix.tph~
+  LAF fix_language INT_VAR from_key = 1 END
 END
 
 
@@ -164,6 +174,11 @@ ACTION_FOR_EACH path IN ~%USER_DIRECTORY%~ ~.~ ~dlc~ ~workshop~ BEGIN
       END
       ACTION_IF (success) BEGIN
         OUTER_SET merge_count += 1
+        ACTION_IF (~%dlc_name%~ STR_EQ ~sod-dlc~) BEGIN
+          // Applying language selection fix
+          INCLUDE ~%MOD_FOLDER%/lib/language_fix.tph~
+          LAF fix_language INT_VAR from_key = 1 END
+        END
       END ELSE BEGIN
         OUTER_SPRINT dlc_name ~%file_path%~
         ACTION_IF (code = ERROR_DLC_INVALID) BEGIN
@@ -189,3 +204,4 @@ DESIGNATED 10
 LABEL ~A7-DLCMERGER-FIX_LANGUAGE_SELECTION~
 
 INCLUDE ~%MOD_FOLDER%/lib/language_fix.tph~
+LAF fix_language INT_VAR from_key = 0 verbose = 0 END

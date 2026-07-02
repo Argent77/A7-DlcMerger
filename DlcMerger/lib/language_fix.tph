@@ -1,44 +1,101 @@
-// required to stop the game from looking for files exclusively in the DLC zip archive
-COPY_EXISTING ~ui.menu~ ~override~
-  REPLACE_TEXTUALLY ~Infinity_GetFileExistsInZip~ ~Infinity_GetFileExists~
-BUT_ONLY IF_EXISTS
+INCLUDE ~%MOD_FOLDER%/lib/extract_file.tph~
 
+<<<<<<<< .../inlined/DlcMerger/blank
+>>>>>>>>
 
-// removing language entries from the selection list that don't provide SoD strings
-GET_DIRECTORY_ARRAY lang_folders ~lang~ ~^.._..$~
-ACTION_PHP_EACH lang_folders AS _ => path BEGIN
-  SILENT
-  COPY ~%path%/dialog.tlk~ ~%path%/dialog.tlk~
-    READ_LONG 0x0a num_entries
-    PATCH_IF (num_entries <= 34000) BEGIN
-      INNER_PATCH_SAVE lang_id ~%path%~ BEGIN REPLACE_TEXTUALLY ~^.*\([a-z][a-z]_[A-Z][A-Z]\)$~ ~\1~ END
-      PATCH_IF (STRING_LENGTH ~%lang_id%~ == 5) BEGIN
-        SET $languages(~%lang_id%~) = 1
-      END
+/**
+ * Wrapper function that performs the necessary operations to fix the language selection issue.
+ *
+ * INT_VAR from_key   Specifies whether game resources should be fetched manually from biff files by code,
+ *                    effectively overriding WeiDU's own resource handling.
+ *                    Required if BIFF archive or CHITIN.KEY content changed in the current session.
+ * INT_VAR verbose    Whether to print additional information to the output.
+ */
+DEFINE_ACTION_FUNCTION fix_language
+INT_VAR
+  from_key = 1
+  verbose = 1
+BEGIN
+  ACTION_IF (from_key && ~%WEIDU_ARCH%~ STR_EQ ~x86~) BEGIN
+    PRINT @103  // "Siege of Dragonspear" language selection fix could not be applied. Run the mod installer again to install the fix manually.
+  END ELSE BEGIN
+    ACTION_IF (verbose) BEGIN
+      PRINT @102  // Applying "Siege of Dragonspear" language selection fix...
     END
-  BUT_ONLY IF_EXISTS
-  VERBOSE
-END
 
-COPY_EXISTING ~BGEE.LUA~ ~override~
-  SET ofs1 = INDEX_BUFFER(~sodZipLanguages[ %TAB%]*=[ %TAB%]*{~)
-  PATCH_IF (ofs1 >= 0) BEGIN
-    SET ofs2 = INDEX_BUFFER(~}[ %TAB%%WNL%]*}~ ofs1)
-    PATCH_IF (ofs2 > ofs1) BEGIN
-      SET ofs2 += 1
-      SET old_size = ofs2 - ofs1
-      READ_ASCII ofs1 block (old_size)
-      INNER_PATCH_SAVE new_block ~%block%~ BEGIN
-        PHP_EACH languages AS lang_id => _ BEGIN
-          REPLACE_TEXTUALLY ~^\([ %TAB%]*{'%lang_id%',\)~ ~-- \1~
+    // required to stop the game from looking for files exclusively in the DLC zip archive
+    LAF extract_file INT_VAR from_key STR_VAR resref = ~ui~ ext = ~menu~ RET success buffer END
+    ACTION_IF (success) BEGIN
+      ACTION_IF (INDEX(CASE_SENSITIVE EXACT_MATCH ~Infinity_GetFileExistsInZip~ ~%buffer%~) >= 0) BEGIN
+        OUTER_PATCH_SAVE new_buffer ~%buffer%~ BEGIN REPLACE_TEXTUALLY ~Infinity_GetFileExistsInZip~ ~Infinity_GetFileExists~ END
+        OUTER_SET buffer_len = STRING_LENGTH ~%buffer%~
+        OUTER_SET new_buffer_len = STRING_LENGTH ~%new_buffer%~
+        ACTION_IF (buffer_len != new_buffer_len || NOT ~%buffer%~ STR_EQ ~%new_buffer%~) BEGIN
+          COPY ~.../inlined/DlcMerger/blank~ ~override/ui.menu~
+            INSERT_BYTES 0 new_buffer_len
+            WRITE_ASCIIE 0 ~%new_buffer%~ (new_buffer_len)
         END
       END
-      SET new_size = STRING_LENGTH ~%new_block%~
-      PATCH_IF (new_size != old_size) BEGIN
-        DELETE_BYTES ofs1 old_size
-        INSERT_BYTES ofs1 new_size
+    END ELSE BEGIN
+      OUTER_SPRINT resource ~UI.MENU~
+      WARN @104 // WARNING: Could not patch %resource%
+    END
+
+    // removing language entries from the selection list that don't provide SoD strings
+    GET_DIRECTORY_ARRAY lang_folders ~lang~ ~^[a-zA-Z][a-zA-Z]_[a-zA-Z][a-zA-Z]$~
+    ACTION_PHP_EACH lang_folders AS _ => path BEGIN
+      SILENT
+      COPY ~%path%/dialog.tlk~ ~%path%/dialog.tlk~
+        READ_LONG 0x0a num_entries
+        PATCH_IF (num_entries <= 34000) BEGIN
+          INNER_PATCH_SAVE lang_id ~%path%~ BEGIN REPLACE_TEXTUALLY ~^.*\([a-zA-Z][a-zA-Z]_[a-zA-Z][a-zA-Z]\)$~ ~\1~ END
+          PATCH_IF (STRING_LENGTH ~%lang_id%~ == 5) BEGIN
+            SET $languages(~%lang_id%~) = 1
+          END
+        END
+      BUT_ONLY IF_EXISTS
+      VERBOSE
+    END
+
+    LAF extract_file INT_VAR from_key STR_VAR resref = ~bgee~ ext = ~lua~ RET success buffer END
+    ACTION_IF (success) BEGIN
+      OUTER_SET patched = 0
+      OUTER_PATCH_SAVE new_buffer ~%buffer%~ BEGIN
+        SET ofs1 = INDEX_BUFFER(~sodZipLanguages[ %TAB%]*=[ %TAB%]*{~)
+        PATCH_IF (ofs1 >= 0) BEGIN
+          SET ofs2 = INDEX_BUFFER(~}[ %TAB%%WNL%]*}~ ofs1)
+          PATCH_IF (ofs2 > ofs1) BEGIN
+            SET ofs2 += 1
+            SET old_size = ofs2 - ofs1
+            READ_ASCII ofs1 block (old_size)
+            INNER_PATCH_SAVE new_block ~%block%~ BEGIN
+              PHP_EACH languages AS lang_id => _ BEGIN
+                REPLACE_TEXTUALLY ~^\([ %TAB%]*{'%lang_id%',\)~ ~-- \1~
+              END
+            END
+            SET new_size = STRING_LENGTH ~%new_block%~
+            PATCH_IF (new_size != old_size) BEGIN
+              DELETE_BYTES ofs1 old_size
+              INSERT_BYTES ofs1 new_size
+            END
+            WRITE_ASCIIE ofs1 ~%new_block%~ (new_size)
+            SET patched = 1
+          END
+        END
       END
-      WRITE_ASCIIE ofs1 ~%new_block%~ (new_size)
+
+      ACTION_IF (patched) BEGIN
+        OUTER_SET buffer_len = STRING_LENGTH ~%buffer%~
+        OUTER_SET new_buffer_len = STRING_LENGTH ~%new_buffer%~
+        ACTION_IF (buffer_len != new_buffer_len || NOT ~%buffer%~ STR_EQ ~%new_buffer%~) BEGIN
+          COPY ~.../inlined/DlcMerger/blank~ ~override/bgee.lua~
+            INSERT_BYTES 0 new_buffer_len
+            WRITE_ASCIIE 0 ~%new_buffer%~ (new_buffer_len)
+        END
+      END
+    END ELSE BEGIN
+      OUTER_SPRINT resource ~BGEE.LUA~
+      WARN @104 // WARNING: Could not patch %resource%
     END
   END
-BUT_ONLY
+END
