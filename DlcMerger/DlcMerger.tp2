@@ -53,10 +53,14 @@ LANGUAGE ~French (Translation by Deratiseur)~
 
 
 BEGIN @1  // "Siege of Dragonspear" DLC
-REQUIRE_PREDICATE (GAME_IS ~bgee~) @50 // Baldur's Gate: Enhanced Edition required.
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet iwdee pstee~) @52 // Enhanced Edition game required.
 SUBCOMPONENT @0 // Merge DLC into game
 DESIGNATED 1
 LABEL ~A7-DLCMERGER-MERGE_SOD~
+
+ACTION_IF (NOT GAME_IS ~bgee~) BEGIN
+  ABORT @50 // Baldur's Gate: Enhanced Edition required.
+END
 
 ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
   ABORT @54 // Siege of Dragonspear DLC already merged.

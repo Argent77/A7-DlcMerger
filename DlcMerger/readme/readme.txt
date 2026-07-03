@@ -101,6 +101,7 @@ History
 2.1
 - Updated Simplified Chinese translation
 - Siege of Dragonspear language selection fix will be automatically applied by the main component (see note in readme)
+- Custom merge options are available to all EE games
 
 2.0
 - Added French translation (thanks Deratiseur)
