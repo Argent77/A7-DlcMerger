@@ -3,22 +3,30 @@
 @2 = ~Unir o DLC definido pelo usuário~
 @3 = ~Unir todos os DLCs disponíveis~
 
+@10 = ~Conserto da seleção dos idiomas do "Siege of Dragonspear"~
+
 @50 = ~É requerido o Baldur's Gate: Enhanced Edition.~
 @51 = ~É requerido o DLC "Siege of Dragonspear".~
 @52 = ~É requerido a versão Enhanced Edition do jogo.~
 @53 = ~Não funciona no momento com o instalador WeiDU de 32 bits.~
 @54 = ~O DLC Siege of Dragonspear já foi unido.~
+@55 = ~É requerido a campanha unida do "Siege of Dragonspear". (Você pode ter que reiniciar o instalador dos mods pra detectar o jogo apropriadamente.)~
+@56 = ~O conserto da seleção dos idiomas não é necessário.~
 
 @100 = ~Unindo as chaves...~
 @101 = ~Desempacotando o arquivo compactado do DLC. Isto pode demorar um pouco...~
+@102 = ~Aplicando o conserto da seleção dos idimoas do "Siege of Dragonspear"...~
+@103 = ~O conserto da seleção dos idiomas do "Siege of Dragonspear" não pôde ser aplicado. Execute o instalador dos mods de novo pra instalar o conserto manualmente.~
+@104 = ~AVISO: Não pôde aplicar o patch %resource%~
 
-@200 = ~O arquivo do DLC está corrompido ou incompleto.~
+@200 = ~O arquivo compactado do DLC está corrompido ou incompleto.~
 @201 = ~Incapaz de unir as chaves.~
 @202 = ~Não pôde desempacotar o arquivo compactado do DLC.~
 @203 = ~AVISO: Incapaz de renomear o arquivo do DLC. Por favor renomeie manualmente o "%dlc_filespec%" como "%dlc_res%.disabled".~
+@204 = ~O comando "unzip" não pôde ser achado no sistema.~
 
-@300 = ~Insira o nome do arquivo do DLC (sem caminho ou extensão):~
-@301 = ~Por favor insira o nome do arquivo do DLC sem caminho ou extensão.~
+@300 = ~Insira o nome do arquivo do DLC (sem o caminho ou extensão):~
+@301 = ~Por favor insira o nome do arquivo do DLC sem o caminho ou extensão.~
 @302 = ~Não pôde achar o DLC "%dlc_name%". Tentar de novo (s/n)?~
 @303 = ~Operação de união cancelada.~
 
