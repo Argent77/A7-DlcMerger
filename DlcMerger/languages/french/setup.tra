@@ -20,7 +20,7 @@
 
 @300 = ~Entrez le nom du fichier DLC (sans chemin ni extension) :~
 @301 = ~Veuillez entrer le nom du fichier DLC sans chemin ni extension.~
-@302 = ~Impossible de trouver le DLC « %dlc_name% ». Voulez-vous reessayer (o/n) ?~
+@302 = ~Impossible de trouver le DLC « %dlc_name% ». Voulez-vous reessayer (y/n) ?~
 @303 = ~Operation de fusion annulee.~
 
 @400 = ~Fusion du DLC "%dlc_name%"...~
