@@ -87,6 +87,8 @@ Simplified Chinese translation: MephistoSatanDevil
 
 French translation: Deratiseur
 
+Italian translation: Sauler
+
 
 Copyright Notice
 ~~~~~~~~~~~~~~~~

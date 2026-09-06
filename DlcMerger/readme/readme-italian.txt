@@ -80,15 +80,17 @@ Nota: il componente principale della mod applica già questa correzione. Tuttavi
 Riconoscimenti
 ~~~~~~~~~~~~~~
 
-Programmazione e test: Argent77
+Coding and testing: Argent77
 
-Traduzione in portoghese brasiliano: Felipe
+Brazilian Portuguese translation: Felipe
 
-Traduzione in spagnolo: ElGamerViejuno
+Spanish translation: ElGamerViejuno
 
-Traduzione in cinese semplificato: MephistoSatanDevil
+Simplified Chinese translation: MephistoSatanDevil
 
-Traduzione in francese: Deratiseur
+French translation: Deratiseur
+
+Italian translation: Sauler
 
 
 Licenza
@@ -99,50 +101,49 @@ La mod "DLC Merger" è distribuita con licenza "Creative Commons Attribution-Sha
 
 
 Cronologia delle versioni
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 2.1
-- Aggiornata la traduzione in cinese semplificato
-- Il componente principale applica automaticamente la correzione della selezione della lingua in Siege of Dragonspear
-  (vedi la nota nel readme)
-- Le opzioni di integrazione personalizzate sono disponibili per tutti i giochi EE
+- Updated Simplified Chinese translation
+- Siege of Dragonspear language selection fix will be automatically applied by the main component (see note in readme)
+- Custom merge options are available to all EE games
 
 2.0
-- Aggiunta la traduzione in francese (grazie a Deratiseur)
-- Aggiunto il componente "Correzione della selezione della lingua in Siege of Dragonspear"
+- Added French translation (thanks Deratiseur)
+- Added new component "Siege of Dragonspear language selection fix"
 
 1.8
-- Aggiunto un controllo della presenza di "unzip" su Linux e macOS
-- Risolto un problema che impediva l'installazione della mod su Linux nei file system che distinguono maiuscole e minuscole
+- Added check for "unzip" presence on Linux and macOS platforms
+- Fixed issue that prevented the mod from installing on case-sensitive filesystems on Linux
 
 1.7
-- Aggiornata la traduzione in cinese semplificato
-- Migliorata la gestione degli errori quando il file DLC integrato non viene rinominato correttamente
+- Updated Simplified Chinese translation
+- Improved error handling if merged DLC file wasn't properly renamed
 
 1.6
-- Aggiunta la traduzione in cinese semplificato (grazie a MephistoSatanDevil)
+- Added Simplified Chinese translation (thanks MephistoSatanDevil)
 
 1.5
-- Aggiunta la traduzione in spagnolo (grazie a ElGamerViejuno)
-- Corretto un refuso nella traduzione in portoghese brasiliano
+- Added Spanish translation (thanks ElGamerViejuno)
+- Fixed typo in Brazilian Portuguese translation
 
 1.4
-- Aggiunta la traduzione in portoghese brasiliano (grazie a Felipe)
-- Aggiunte le etichette dei componenti per Project Infinity
-- Migliorati il rilevamento e la gestione degli archivi DLC non validi
+- Added Brazilian Portuguese translation (thanks Felipe)
+- Added component labels for Project Infinity
+- Improved detection and handling of invalid DLC archives
 
 1.3
-- Aggiunta la traduzione in tedesco
-- Aggiunti i metadati per Project Infinity
-- Aggiunte le informazioni SUPPORT di WeiDU
-- Risolti potenziali problemi di visualizzazione dei nomi dei componenti in WeiDU.log e Project Infinity
-- Migliorata la descrizione dei componenti (grazie ad ALIEN)
+- Added German translation
+- Added Project Infinity metadata
+- Added WeiDU SUPPORT information
+- Fixed potential display issues with component names in WeiDU.log and Project Infinity
+- Improved description of components (thanks ALIEN)
 
 1.2
-- Rimosse dal readme le informazioni su EET e Fixpack, perché non più necessarie
+- Removed information regarding EET and Fixpack from readme because it's not needed anymore
 
 1.1
-- Aggiunte al readme le informazioni su EET e Fixpack
+- Added information regarding EET and Fixpack to readme
 
 1.0
-- Prima versione
+- Initial release
