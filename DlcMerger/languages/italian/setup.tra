@@ -1,0 +1,36 @@
+@0 = ~Integra i DLC nel gioco~
+@1 = ~Integra il DLC "Siege of Dragonspear"~
+@2 = ~Integra un DLC specificato dall'utente~
+@3 = ~Integra tutti i DLC disponibili~
+
+@10 = ~Correzione della selezione della lingua in "Siege of Dragonspear"~
+
+@50 = ~È richiesto Baldur's Gate: Enhanced Edition.~
+@51 = ~È richiesto il DLC Siege of Dragonspear.~
+@52 = ~È richiesto un gioco in versione Enhanced Edition.~
+@53 = ~Al momento questa operazione non è supportata dal programma di installazione WeiDU a 32 bit.~
+@54 = ~Il DLC Siege of Dragonspear è già stato integrato.~
+@55 = ~È necessario aver integrato la campagna "Siege of Dragonspear". (Potrebbe essere necessario riavviare il programma di installazione della mod affinché il gioco venga rilevato correttamente.)~
+@56 = ~La correzione della selezione della lingua non è necessaria.~
+
+@100 = ~Unione dei file KEY in corso...~
+@101 = ~Estrazione dell'archivio DLC in corso. L'operazione potrebbe richiedere del tempo...~
+@102 = ~Applicazione della correzione della selezione della lingua in "Siege of Dragonspear" in corso...~
+@103 = ~Impossibile applicare la correzione della selezione della lingua in "Siege of Dragonspear". Esegui nuovamente il programma di installazione della mod per installare la correzione manualmente.~
+@104 = ~ATTENZIONE: impossibile applicare la modifica a %resource%~
+
+@200 = ~L'archivio DLC è danneggiato o incompleto.~
+@201 = ~Impossibile unire i file KEY.~
+@202 = ~Impossibile estrarre l'archivio DLC.~
+@203 = ~ATTENZIONE: impossibile rinominare il file DLC. Rinomina manualmente "%dlc_filespec%" in "%dlc_res%.disabled".~
+@204 = ~Il comando "unzip" non è stato trovato nel sistema.~
+
+@300 = ~Inserisci il nome del file DLC (senza percorso né estensione):~
+@301 = ~Inserisci il nome del file DLC senza percorso né estensione.~
+@302 = ~Impossibile trovare il DLC "%dlc_name%". Vuoi riprovare (y/n, y = sì, n = no)?~
+@303 = ~Operazione di integrazione annullata.~
+
+@400 = ~Integrazione del DLC "%dlc_name%" in corso...~
+@401 = ~Nessun archivio DLC valido trovato. Installazione annullata.~
+@402 = ~Impossibile integrare l'archivio DLC "%dlc_name%". (Messaggio: %message%)~
+@403 = ~"%dlc_name%" ignorato: non è un archivio DLC.~
